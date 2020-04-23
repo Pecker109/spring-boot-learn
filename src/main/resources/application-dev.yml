@@ -1,0 +1,13 @@
+debug: true
+server:
+  port: 8848
+
+#Apollo
+#app:
+#  id: apollo-demo
+#apollo:
+#  meta: "http://172.16.210.164:8080"
+#  cacheDir: "/data/apolloCacheDir"
+#  bootstrap:
+#    enabled: true
+#    namespaces: application
