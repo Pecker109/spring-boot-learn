@@ -1,6 +1,6 @@
 debug: true
 server:
-  port: 8848
+  port: 8847
 
 #Apollo
 #app:

@@ -1,0 +1,28 @@
+##端口号
+server:
+  port : 8845
+
+spring:
+  application:
+    name: admin-client
+  boot:
+    admin:
+      client:
+        # Spring Boot Admin服务地址，参照admin模块application.yml配置
+        url: http://localhost:8846
+        # Spring Boot Admin账号
+        username: admin
+        password: admin
+        # 当前项目实例名称
+        instance:
+          # client名称
+          name: admin-client
+          # client ip端口
+          service-base-url: http://localhost:8845
+
+#要添加上此处配置,否则只能看到服务注册到 Admin Service 上了,却没有监控信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

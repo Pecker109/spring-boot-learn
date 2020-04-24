@@ -1,0 +1,11 @@
+server:
+  port: 8846
+
+# Spring Boot Admin Server配置
+spring:
+  application:
+    name: admin-service
+  security:
+    user:
+      username: admin
+      password: admin
