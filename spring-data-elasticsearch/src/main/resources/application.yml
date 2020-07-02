@@ -1,0 +1,6 @@
+# ES
+#spring:
+#  data:
+#    elasticsearch:
+#      cluster-name : es_1.server1
+#      cluster-nodes : 10.50.26.247:19301
