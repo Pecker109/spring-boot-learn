@@ -6,12 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author dalaoyang
- * @Description
- * @project springboot_learn
- * @package com.dalaoyang.annotation
- * @email yangyang@dalaoyang.cn
- * @date 2018/9/9
+ * @author Pecker
+ * @Description 类信息
+ * @since 2020-04-23
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

@@ -1,19 +1,27 @@
 package springdataelasticsearch;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import springdataelasticsearch.service.RestClientService;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-class DemoApplicationTests {
+public class DemoApplicationTests {
 
-	@Autowired
-	RestClientService restClientService;
+    @Autowired
+    RestClientService restClientService;
+
+    @Test
+    public void contextLoads() {
+        restClientService.get();
+    }
 
 	@Test
-	void contextLoads() {
-		restClientService.get();
+	public void agentLogin() {
+
 	}
 
 }

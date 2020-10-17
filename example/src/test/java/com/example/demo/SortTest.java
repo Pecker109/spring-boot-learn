@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 public class SortTest {
 
     public static void main(String[] args) {
+        sortLong();
+
+
         List<Obj> list = Arrays.asList(
                 new Obj("政府", null),
                 new Obj("政府", new BigDecimal("1216.23")),
@@ -66,8 +69,6 @@ public class SortTest {
                     }
                 }).thenComparing(Comparator.comparing(Obj::getPrice, Comparator.nullsFirst(BigDecimal::compareTo)).reversed())
         ).collect(Collectors.toList()).forEach(System.out::println);
-        ;
-
 
     }
 
@@ -77,5 +78,23 @@ public class SortTest {
     public static class Obj {
         private String name;
         private BigDecimal price;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class KeyValue {
+        private String key;
+        private Long value;
+    }
+
+    public static void sortLong(){
+        List<KeyValue> list = new ArrayList<>();
+        KeyValue keyValue1 = new KeyValue("key", 10L);
+        KeyValue keyValue2 = new KeyValue("key", 20L);
+        list.add(keyValue1);
+        list.add(keyValue2);
+        list.stream().sorted(Comparator.comparing(KeyValue::getValue, Long::compareTo).reversed())
+                .collect(Collectors.toList()).forEach(System.out::println);
     }
 }
