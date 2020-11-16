@@ -13,9 +13,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class CommonTest {
     public static void main(String[] args) {
-        ThreadFactory threadFactory;
-        ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
+    //第一次提交
     }
 
 }
