@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mybatis.mapper.SiteInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.model.SiteInfo">
+    <!--@mbg.generated-->
+    <!--@Table site_info-->
+    <id column="id" property="id" />
+    <result column="url" property="url" />
+    <result column="title" property="title" />
+    <result column="icp_info" property="icpInfo" />
+    <result column="whois_info" property="whoisInfo" />
+    <result column="domain1" property="domain1" />
+    <result column="domain" property="domain" />
+    <result column="admin_location" property="adminLocation" />
+    <result column="port" property="port" />
+    <result column="finger" property="finger" />
+    <result column="is_https" property="isHttps" />
+    <result column="create_user" property="createUser" />
+    <result column="create_time" property="createTime" />
+    <result column="ip" property="ip" />
+    <result column="unit" property="unit" />
+    <result column="type" property="type" />
+    <result column="industry" property="industry" />
+    <result column="cname" property="cname" />
+    <result column="is_parse" property="isParse" />
+    <result column="checked" property="checked" />
+    <result column="checked_status" property="checkedStatus" />
+    <result column="checked_user" property="checkedUser" />
+    <result column="checked_time" property="checkedTime" />
+    <result column="fail_reason" property="failReason" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="last_modified_time" property="lastModifiedTime" />
+    <result column="auto_parse_tag" property="autoParseTag" />
+    <result column="real_url" property="realUrl" />
+    <result column="mark" property="mark" />
+    <result column="f_port" property="fPort" />
+    <result column="is_fport" property="isFport" />
+    <result column="is_src" property="isSrc" />
+    <result column="entity_id" property="entityId" />
+    <result column="last_modified_user" property="lastModifiedUser" />
+    <result column="asset_type" property="assetType" />
+    <result column="asset_name" property="assetName" />
+    <result column="deploy_location" property="deployLocation" />
+    <result column="deploy_type" property="deployType" />
+    <result column="asset_source" property="assetSource" />
+    <result column="private_net_ip" property="privateNetIp" />
+    <result column="network" property="network" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, url, title, icp_info, whois_info, domain1, `domain`, admin_location, port, finger, 
+    is_https, create_user, create_time, ip, unit, `type`, industry, cname, is_parse, 
+    `checked`, checked_status, checked_user, checked_time, fail_reason, is_deleted, last_modified_time, 
+    auto_parse_tag, real_url, mark, f_port, is_fport, is_src, entity_id, last_modified_user, 
+    asset_type, asset_name, deploy_location, deploy_type, asset_source, private_net_ip, 
+    network
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from site_info
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from site_info
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.model.SiteInfo">
+    <!--@mbg.generated-->
+    insert into site_info (id, url, title, icp_info, whois_info, domain1, `domain`, 
+      admin_location, port, finger, is_https, create_user, create_time, 
+      ip, unit, `type`, industry, cname, is_parse, `checked`, checked_status, 
+      checked_user, checked_time, fail_reason, is_deleted, last_modified_time, 
+      auto_parse_tag, real_url, mark, f_port, is_fport, is_src, entity_id, 
+      last_modified_user, asset_type, asset_name, deploy_location, deploy_type, 
+      asset_source, private_net_ip, network)
+    values (#{id}, #{url}, #{title}, #{icpInfo}, #{whoisInfo}, #{domain1}, #{domain}, 
+      #{adminLocation}, #{port}, #{finger}, #{isHttps}, #{createUser}, #{createTime}, 
+      #{ip}, #{unit}, #{type}, #{industry}, #{cname}, #{isParse}, #{checked}, #{checkedStatus}, 
+      #{checkedUser}, #{checkedTime}, #{failReason}, #{isDeleted}, #{lastModifiedTime}, 
+      #{autoParseTag}, #{realUrl}, #{mark}, #{fPort}, #{isFport}, #{isSrc}, #{entityId}, 
+      #{lastModifiedUser}, #{assetType}, #{assetName}, #{deployLocation}, #{deployType}, 
+      #{assetSource}, #{privateNetIp}, #{network})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.model.SiteInfo">
+    <!--@mbg.generated-->
+    insert into site_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="icpInfo != null">
+        icp_info,
+      </if>
+      <if test="whoisInfo != null">
+        whois_info,
+      </if>
+      <if test="domain1 != null">
+        domain1,
+      </if>
+      <if test="domain != null">
+        `domain`,
+      </if>
+      <if test="adminLocation != null">
+        admin_location,
+      </if>
+      <if test="port != null">
+        port,
+      </if>
+      <if test="finger != null">
+        finger,
+      </if>
+      <if test="isHttps != null">
+        is_https,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="isParse != null">
+        is_parse,
+      </if>
+      <if test="checked != null">
+        `checked`,
+      </if>
+      <if test="checkedStatus != null">
+        checked_status,
+      </if>
+      <if test="checkedUser != null">
+        checked_user,
+      </if>
+      <if test="checkedTime != null">
+        checked_time,
+      </if>
+      <if test="failReason != null">
+        fail_reason,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time,
+      </if>
+      <if test="autoParseTag != null">
+        auto_parse_tag,
+      </if>
+      <if test="realUrl != null">
+        real_url,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+      <if test="fPort != null">
+        f_port,
+      </if>
+      <if test="isFport != null">
+        is_fport,
+      </if>
+      <if test="isSrc != null">
+        is_src,
+      </if>
+      <if test="entityId != null">
+        entity_id,
+      </if>
+      <if test="lastModifiedUser != null">
+        last_modified_user,
+      </if>
+      <if test="assetType != null">
+        asset_type,
+      </if>
+      <if test="assetName != null">
+        asset_name,
+      </if>
+      <if test="deployLocation != null">
+        deploy_location,
+      </if>
+      <if test="deployType != null">
+        deploy_type,
+      </if>
+      <if test="assetSource != null">
+        asset_source,
+      </if>
+      <if test="privateNetIp != null">
+        private_net_ip,
+      </if>
+      <if test="network != null">
+        network,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="url != null">
+        #{url},
+      </if>
+      <if test="title != null">
+        #{title},
+      </if>
+      <if test="icpInfo != null">
+        #{icpInfo},
+      </if>
+      <if test="whoisInfo != null">
+        #{whoisInfo},
+      </if>
+      <if test="domain1 != null">
+        #{domain1},
+      </if>
+      <if test="domain != null">
+        #{domain},
+      </if>
+      <if test="adminLocation != null">
+        #{adminLocation},
+      </if>
+      <if test="port != null">
+        #{port},
+      </if>
+      <if test="finger != null">
+        #{finger},
+      </if>
+      <if test="isHttps != null">
+        #{isHttps},
+      </if>
+      <if test="createUser != null">
+        #{createUser},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="ip != null">
+        #{ip},
+      </if>
+      <if test="unit != null">
+        #{unit},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="industry != null">
+        #{industry},
+      </if>
+      <if test="cname != null">
+        #{cname},
+      </if>
+      <if test="isParse != null">
+        #{isParse},
+      </if>
+      <if test="checked != null">
+        #{checked},
+      </if>
+      <if test="checkedStatus != null">
+        #{checkedStatus},
+      </if>
+      <if test="checkedUser != null">
+        #{checkedUser},
+      </if>
+      <if test="checkedTime != null">
+        #{checkedTime},
+      </if>
+      <if test="failReason != null">
+        #{failReason},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
+      <if test="lastModifiedTime != null">
+        #{lastModifiedTime},
+      </if>
+      <if test="autoParseTag != null">
+        #{autoParseTag},
+      </if>
+      <if test="realUrl != null">
+        #{realUrl},
+      </if>
+      <if test="mark != null">
+        #{mark},
+      </if>
+      <if test="fPort != null">
+        #{fPort},
+      </if>
+      <if test="isFport != null">
+        #{isFport},
+      </if>
+      <if test="isSrc != null">
+        #{isSrc},
+      </if>
+      <if test="entityId != null">
+        #{entityId},
+      </if>
+      <if test="lastModifiedUser != null">
+        #{lastModifiedUser},
+      </if>
+      <if test="assetType != null">
+        #{assetType},
+      </if>
+      <if test="assetName != null">
+        #{assetName},
+      </if>
+      <if test="deployLocation != null">
+        #{deployLocation},
+      </if>
+      <if test="deployType != null">
+        #{deployType},
+      </if>
+      <if test="assetSource != null">
+        #{assetSource},
+      </if>
+      <if test="privateNetIp != null">
+        #{privateNetIp},
+      </if>
+      <if test="network != null">
+        #{network},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.model.SiteInfo">
+    <!--@mbg.generated-->
+    update site_info
+    <set>
+      <if test="url != null">
+        url = #{url},
+      </if>
+      <if test="title != null">
+        title = #{title},
+      </if>
+      <if test="icpInfo != null">
+        icp_info = #{icpInfo},
+      </if>
+      <if test="whoisInfo != null">
+        whois_info = #{whoisInfo},
+      </if>
+      <if test="domain1 != null">
+        domain1 = #{domain1},
+      </if>
+      <if test="domain != null">
+        `domain` = #{domain},
+      </if>
+      <if test="adminLocation != null">
+        admin_location = #{adminLocation},
+      </if>
+      <if test="port != null">
+        port = #{port},
+      </if>
+      <if test="finger != null">
+        finger = #{finger},
+      </if>
+      <if test="isHttps != null">
+        is_https = #{isHttps},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime},
+      </if>
+      <if test="ip != null">
+        ip = #{ip},
+      </if>
+      <if test="unit != null">
+        unit = #{unit},
+      </if>
+      <if test="type != null">
+        `type` = #{type},
+      </if>
+      <if test="industry != null">
+        industry = #{industry},
+      </if>
+      <if test="cname != null">
+        cname = #{cname},
+      </if>
+      <if test="isParse != null">
+        is_parse = #{isParse},
+      </if>
+      <if test="checked != null">
+        `checked` = #{checked},
+      </if>
+      <if test="checkedStatus != null">
+        checked_status = #{checkedStatus},
+      </if>
+      <if test="checkedUser != null">
+        checked_user = #{checkedUser},
+      </if>
+      <if test="checkedTime != null">
+        checked_time = #{checkedTime},
+      </if>
+      <if test="failReason != null">
+        fail_reason = #{failReason},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted},
+      </if>
+      <if test="lastModifiedTime != null">
+        last_modified_time = #{lastModifiedTime},
+      </if>
+      <if test="autoParseTag != null">
+        auto_parse_tag = #{autoParseTag},
+      </if>
+      <if test="realUrl != null">
+        real_url = #{realUrl},
+      </if>
+      <if test="mark != null">
+        mark = #{mark},
+      </if>
+      <if test="fPort != null">
+        f_port = #{fPort},
+      </if>
+      <if test="isFport != null">
+        is_fport = #{isFport},
+      </if>
+      <if test="isSrc != null">
+        is_src = #{isSrc},
+      </if>
+      <if test="entityId != null">
+        entity_id = #{entityId},
+      </if>
+      <if test="lastModifiedUser != null">
+        last_modified_user = #{lastModifiedUser},
+      </if>
+      <if test="assetType != null">
+        asset_type = #{assetType},
+      </if>
+      <if test="assetName != null">
+        asset_name = #{assetName},
+      </if>
+      <if test="deployLocation != null">
+        deploy_location = #{deployLocation},
+      </if>
+      <if test="deployType != null">
+        deploy_type = #{deployType},
+      </if>
+      <if test="assetSource != null">
+        asset_source = #{assetSource},
+      </if>
+      <if test="privateNetIp != null">
+        private_net_ip = #{privateNetIp},
+      </if>
+      <if test="network != null">
+        network = #{network},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.model.SiteInfo">
+    <!--@mbg.generated-->
+    update site_info
+    set url = #{url},
+      title = #{title},
+      icp_info = #{icpInfo},
+      whois_info = #{whoisInfo},
+      domain1 = #{domain1},
+      `domain` = #{domain},
+      admin_location = #{adminLocation},
+      port = #{port},
+      finger = #{finger},
+      is_https = #{isHttps},
+      create_user = #{createUser},
+      create_time = #{createTime},
+      ip = #{ip},
+      unit = #{unit},
+      `type` = #{type},
+      industry = #{industry},
+      cname = #{cname},
+      is_parse = #{isParse},
+      `checked` = #{checked},
+      checked_status = #{checkedStatus},
+      checked_user = #{checkedUser},
+      checked_time = #{checkedTime},
+      fail_reason = #{failReason},
+      is_deleted = #{isDeleted},
+      last_modified_time = #{lastModifiedTime},
+      auto_parse_tag = #{autoParseTag},
+      real_url = #{realUrl},
+      mark = #{mark},
+      f_port = #{fPort},
+      is_fport = #{isFport},
+      is_src = #{isSrc},
+      entity_id = #{entityId},
+      last_modified_user = #{lastModifiedUser},
+      asset_type = #{assetType},
+      asset_name = #{assetName},
+      deploy_location = #{deployLocation},
+      deploy_type = #{deployType},
+      asset_source = #{assetSource},
+      private_net_ip = #{privateNetIp},
+      network = #{network}
+    where id = #{id}
+  </update>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update site_info
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.url}
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.title}
+        </foreach>
+      </trim>
+      <trim prefix="icp_info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.icpInfo}
+        </foreach>
+      </trim>
+      <trim prefix="whois_info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.whoisInfo}
+        </foreach>
+      </trim>
+      <trim prefix="domain1 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.domain1}
+        </foreach>
+      </trim>
+      <trim prefix="`domain` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.domain}
+        </foreach>
+      </trim>
+      <trim prefix="admin_location = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.adminLocation}
+        </foreach>
+      </trim>
+      <trim prefix="port = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.port}
+        </foreach>
+      </trim>
+      <trim prefix="finger = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.finger}
+        </foreach>
+      </trim>
+      <trim prefix="is_https = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isHttps}
+        </foreach>
+      </trim>
+      <trim prefix="create_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createUser}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.createTime}
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.ip}
+        </foreach>
+      </trim>
+      <trim prefix="unit = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.unit}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.type}
+        </foreach>
+      </trim>
+      <trim prefix="industry = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.industry}
+        </foreach>
+      </trim>
+      <trim prefix="cname = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.cname}
+        </foreach>
+      </trim>
+      <trim prefix="is_parse = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isParse}
+        </foreach>
+      </trim>
+      <trim prefix="`checked` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.checked}
+        </foreach>
+      </trim>
+      <trim prefix="checked_status = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.checkedStatus}
+        </foreach>
+      </trim>
+      <trim prefix="checked_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.checkedUser}
+        </foreach>
+      </trim>
+      <trim prefix="checked_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.checkedTime}
+        </foreach>
+      </trim>
+      <trim prefix="fail_reason = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.failReason}
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isDeleted}
+        </foreach>
+      </trim>
+      <trim prefix="last_modified_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastModifiedTime}
+        </foreach>
+      </trim>
+      <trim prefix="auto_parse_tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.autoParseTag}
+        </foreach>
+      </trim>
+      <trim prefix="real_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.realUrl}
+        </foreach>
+      </trim>
+      <trim prefix="mark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.mark}
+        </foreach>
+      </trim>
+      <trim prefix="f_port = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.fPort}
+        </foreach>
+      </trim>
+      <trim prefix="is_fport = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isFport}
+        </foreach>
+      </trim>
+      <trim prefix="is_src = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.isSrc}
+        </foreach>
+      </trim>
+      <trim prefix="entity_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.entityId}
+        </foreach>
+      </trim>
+      <trim prefix="last_modified_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.lastModifiedUser}
+        </foreach>
+      </trim>
+      <trim prefix="asset_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.assetType}
+        </foreach>
+      </trim>
+      <trim prefix="asset_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.assetName}
+        </foreach>
+      </trim>
+      <trim prefix="deploy_location = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.deployLocation}
+        </foreach>
+      </trim>
+      <trim prefix="deploy_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.deployType}
+        </foreach>
+      </trim>
+      <trim prefix="asset_source = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.assetSource}
+        </foreach>
+      </trim>
+      <trim prefix="private_net_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.privateNetIp}
+        </foreach>
+      </trim>
+      <trim prefix="network = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id} then #{item.network}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update site_info
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.url != null">
+            when id = #{item.id} then #{item.url}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.title != null">
+            when id = #{item.id} then #{item.title}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="icp_info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.icpInfo != null">
+            when id = #{item.id} then #{item.icpInfo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="whois_info = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.whoisInfo != null">
+            when id = #{item.id} then #{item.whoisInfo}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="domain1 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.domain1 != null">
+            when id = #{item.id} then #{item.domain1}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`domain` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.domain != null">
+            when id = #{item.id} then #{item.domain}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="admin_location = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.adminLocation != null">
+            when id = #{item.id} then #{item.adminLocation}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="port = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.port != null">
+            when id = #{item.id} then #{item.port}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="finger = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.finger != null">
+            when id = #{item.id} then #{item.finger}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_https = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isHttps != null">
+            when id = #{item.id} then #{item.isHttps}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createUser != null">
+            when id = #{item.id} then #{item.createUser}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id} then #{item.createTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.ip != null">
+            when id = #{item.id} then #{item.ip}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="unit = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.unit != null">
+            when id = #{item.id} then #{item.unit}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when id = #{item.id} then #{item.type}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="industry = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.industry != null">
+            when id = #{item.id} then #{item.industry}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="cname = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cname != null">
+            when id = #{item.id} then #{item.cname}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_parse = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isParse != null">
+            when id = #{item.id} then #{item.isParse}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`checked` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.checked != null">
+            when id = #{item.id} then #{item.checked}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="checked_status = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.checkedStatus != null">
+            when id = #{item.id} then #{item.checkedStatus}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="checked_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.checkedUser != null">
+            when id = #{item.id} then #{item.checkedUser}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="checked_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.checkedTime != null">
+            when id = #{item.id} then #{item.checkedTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="fail_reason = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.failReason != null">
+            when id = #{item.id} then #{item.failReason}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isDeleted != null">
+            when id = #{item.id} then #{item.isDeleted}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_modified_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastModifiedTime != null">
+            when id = #{item.id} then #{item.lastModifiedTime}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="auto_parse_tag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.autoParseTag != null">
+            when id = #{item.id} then #{item.autoParseTag}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="real_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.realUrl != null">
+            when id = #{item.id} then #{item.realUrl}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="mark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mark != null">
+            when id = #{item.id} then #{item.mark}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="f_port = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.fPort != null">
+            when id = #{item.id} then #{item.fPort}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_fport = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isFport != null">
+            when id = #{item.id} then #{item.isFport}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_src = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isSrc != null">
+            when id = #{item.id} then #{item.isSrc}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="entity_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.entityId != null">
+            when id = #{item.id} then #{item.entityId}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="last_modified_user = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.lastModifiedUser != null">
+            when id = #{item.id} then #{item.lastModifiedUser}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="asset_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.assetType != null">
+            when id = #{item.id} then #{item.assetType}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="asset_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.assetName != null">
+            when id = #{item.id} then #{item.assetName}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="deploy_location = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.deployLocation != null">
+            when id = #{item.id} then #{item.deployLocation}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="deploy_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.deployType != null">
+            when id = #{item.id} then #{item.deployType}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="asset_source = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.assetSource != null">
+            when id = #{item.id} then #{item.assetSource}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="private_net_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.privateNetIp != null">
+            when id = #{item.id} then #{item.privateNetIp}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="network = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.network != null">
+            when id = #{item.id} then #{item.network}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into site_info
+    (id, url, title, icp_info, whois_info, domain1, `domain`, admin_location, port, finger, 
+      is_https, create_user, create_time, ip, unit, `type`, industry, cname, is_parse, 
+      `checked`, checked_status, checked_user, checked_time, fail_reason, is_deleted, 
+      last_modified_time, auto_parse_tag, real_url, mark, f_port, is_fport, is_src, entity_id, 
+      last_modified_user, asset_type, asset_name, deploy_location, deploy_type, asset_source, 
+      private_net_ip, network)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id}, #{item.url}, #{item.title}, #{item.icpInfo}, #{item.whoisInfo}, #{item.domain1}, 
+        #{item.domain}, #{item.adminLocation}, #{item.port}, #{item.finger}, #{item.isHttps}, 
+        #{item.createUser}, #{item.createTime}, #{item.ip}, #{item.unit}, #{item.type}, 
+        #{item.industry}, #{item.cname}, #{item.isParse}, #{item.checked}, #{item.checkedStatus}, 
+        #{item.checkedUser}, #{item.checkedTime}, #{item.failReason}, #{item.isDeleted}, 
+        #{item.lastModifiedTime}, #{item.autoParseTag}, #{item.realUrl}, #{item.mark}, 
+        #{item.fPort}, #{item.isFport}, #{item.isSrc}, #{item.entityId}, #{item.lastModifiedUser}, 
+        #{item.assetType}, #{item.assetName}, #{item.deployLocation}, #{item.deployType}, 
+        #{item.assetSource}, #{item.privateNetIp}, #{item.network})
+    </foreach>
+  </insert>
+</mapper>

@@ -22,7 +22,7 @@ import java.util.Date;
 public class DoneTimeAspect {
 
 
-    @Around("@annotation(doneTime)")
+    @Around(value = "@annotation(doneTime)")
     public Object around(ProceedingJoinPoint joinPoint, DoneTime doneTime) throws Throwable {
 
         System.out.println("doneTime.param()"+doneTime.param());

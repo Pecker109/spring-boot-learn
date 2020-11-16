@@ -1,6 +1,14 @@
 package com.example.demo;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Predicate;
 
 /**
@@ -9,11 +17,35 @@ import java.util.function.Predicate;
  * @since 2020-08-28
  */
 public class ThreadPoolTest {
+    @SneakyThrows
     public static void main(String[] args) {
-        //ReentrantLock reentrantLock = new ReentrantLock();
-        Predicate<String> predicate = s -> s.length() > 0;
-        predicate.test("");
 
+        ExecutorService pool = Executors.newCachedThreadPool();
+
+        int total = 10;
+        int begin = 0;
+        int interval = 1;
+        do {
+            begin = pool.submit(new ThreadPoolTest.SelectTask(begin, interval)).get();
+            //System.out.println("begin...." + begin);
+        } while (begin <= total);
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SelectTask implements Callable<Integer> {
+        int begin;
+        int interval;
+
+        @Override
+        public Integer call() throws Exception {
+            begin += interval;
+            int currentBegin = begin - interval;
+            System.out.println("begin...." + currentBegin);
+            System.out.println(Thread.currentThread());
+            return begin;
+        }
     }
 
 }
