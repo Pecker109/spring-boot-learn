@@ -1,11 +1,5 @@
 package com.example.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-
 /**
  * @author Pecker
  * @Description 类信息
@@ -14,9 +8,20 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CommonTest {
     public static void main(String[] args) {
 
+<<<<<<< HEAD
     //第一次提交
 
     //第二次提交
     }
+=======
+        int total = 1003;
+        int count = 0;
+        do {
+            total -= 10;
+            count++;
+        } while (total > 10);
+        System.out.println(count);
+>>>>>>> 实现ApplicationContextAware生成策略模式
 
+    }
 }
