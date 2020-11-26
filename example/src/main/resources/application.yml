@@ -9,6 +9,6 @@ spring:
     name: example
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql.ahcloud-test.com:3306/saas_cloud_scanner?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mysql.ahcloud-test.com:3306/saas_contract?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&maxReconnects=10&serverTimezone=Asia/Shanghai
     username: root
     password: 1qazCDE#5tgb

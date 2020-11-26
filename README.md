@@ -6,3 +6,4 @@ spring boot demo
 - apollo : 8847
 - admin-service : 8846
 - admin-client : 8845
+- rocket : 8844

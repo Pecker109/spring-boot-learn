@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 /**
  * @author Pecker
  * @Description 类信息
@@ -7,21 +9,8 @@ package com.example.demo;
  */
 public class CommonTest {
     public static void main(String[] args) {
+        List<String> list = null;
 
-<<<<<<< HEAD
-    //第一次提交
-
-    //第二次提交
-    }
-=======
-        int total = 1003;
-        int count = 0;
-        do {
-            total -= 10;
-            count++;
-        } while (total > 10);
-        System.out.println(count);
->>>>>>> 实现ApplicationContextAware生成策略模式
-
+        list.forEach(x -> System.out.println(x));
     }
 }

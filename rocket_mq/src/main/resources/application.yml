@@ -1,0 +1,29 @@
+debug: true
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: rocket
+rocketmq:
+  name-server: 10.20.141.213:9876
+  topic: private-quota-topic-test
+  producer:
+    group: producer-test
+
+#rocketmq:
+#  producer:
+#    groupName: producer-test
+#    namesrvAddr: 10.20.141.213:9876
+#    sendMsgTimeout: 30000
+#    retryTimesWhenSendFailed: 2
+#  consumer:
+#    groupName: producer-test
+#    namesrvAddr: 10.20.141.213:9876
+#    isOnOff: on #该应用是否启用消费者
+#    topics: private-quota-topic-test
+#    consumeThreadMin: 20
+#    consumeThreadMax: 64
+#    consumeMessageBatchMaxSize: 1
+
+
