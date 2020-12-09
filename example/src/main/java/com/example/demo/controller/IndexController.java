@@ -3,14 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.annotation.DoneTime;
 import com.example.demo.annotation.ResponseResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author dalaoyang
@@ -26,8 +19,12 @@ public class IndexController {
     @GetMapping("/index1")
     @ResponseResult
     @DoneTime(param = "IndexController")
-    public String index(String url) {
-        System.out.println(url);
+    public String index(@RequestParam(value = "url",required = false) String url,
+                        @ModelAttribute("modelUser") String modelUser,
+                        @RequestAttribute("requestUser") String requestUser) {
+        System.out.println("从 RequestAttribute 获取参数" + requestUser);
+        System.out.println("从 ModelAttribute 获取参数" + modelUser);
+        System.out.println("从 RequestParam 获取参数" + url);
         System.out.println("方法执行");
         return "hello !!!";
     }

@@ -17,18 +17,22 @@
 
 package rocket.consumer;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
  * StringConsumer
  */
-@Service
+@Component
 @RocketMQMessageListener(topic = "${rocketmq.topic}", consumerGroup = "${rocketmq.producer.group}")
-public class StringConsumer implements RocketMQListener<String> {
+public class StringConsumer implements RocketMQListener<MessageExt> {
     @Override
-    public void onMessage(String message) {
-        System.out.printf("------- StringConsumer received: %s \n", message);
+    public void onMessage(MessageExt message) {
+        System.out.println(JSON.toJSONString(message));
+        System.out.printf("------- StringConsumer received: %s \n", new String(message.getBody()));
     }
 }

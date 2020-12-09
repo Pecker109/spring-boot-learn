@@ -8,9 +8,9 @@ public class RocketMqApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RocketMqApplication.class, args);
-		System.out.println(".................................");
-		System.out.println("..........start success..........");
-		System.out.println(".................................");
+		System.out.println(".....................................................");
+		System.out.println("....................start success....................");
+		System.out.println(".....................................................");
 	}
 
 }
