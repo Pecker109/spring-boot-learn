@@ -5,13 +5,9 @@ import com.example.demo.annotation.DoneTime;
 import com.example.demo.annotation.ResponseResult;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
- * @author dalaoyang
- * @Description
- * @project springboot_learn
- * @package com.dalaoyang.controller
- * @email yangyang@dalaoyang.cn
- * @date 2018/9/9
+ * @author Pecker
  */
 @RestController
 public class IndexController {
