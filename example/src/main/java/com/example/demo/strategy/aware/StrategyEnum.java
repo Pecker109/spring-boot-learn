@@ -1,4 +1,4 @@
-package com.example.demo.bean.strategy;
+package com.example.demo.strategy.aware;
 
 /**
  * @author Pecker

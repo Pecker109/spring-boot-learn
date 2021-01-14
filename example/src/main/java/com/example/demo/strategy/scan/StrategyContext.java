@@ -1,7 +1,6 @@
-package com.example.demo.bean;
+package com.example.demo.strategy.scan;
 
 import com.example.demo.annotation.StrategyKeyFlag;
-import com.example.demo.handler.AbstractHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -14,14 +13,14 @@ import java.util.Map;
  * @since 2020-08-23
  */
 @Component
-public class HandlerContext {
+public class StrategyContext {
     @Autowired
     private ApplicationContext beanFactory;
 
-    public AbstractHandler getInstance(Integer type) {
+    public AbstractStrategy getInstance(Integer type) {
 
         Map<Integer, Class> map = (Map<Integer, Class>) beanFactory.getBean(StrategyKeyFlag.class.getName());
 
-        return (AbstractHandler) beanFactory.getBean(map.get(type));
+        return (AbstractStrategy) beanFactory.getBean(map.get(type));
     }
 }

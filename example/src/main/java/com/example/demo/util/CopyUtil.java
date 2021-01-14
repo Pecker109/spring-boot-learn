@@ -22,39 +22,69 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class CopyUtil {
-    public static <T> T copy(Object source, Class<T> clazz) {
+    /**
+     * @param source      源对象实例
+     * @param targetClazz 目标对象 Class
+     * @param <T>         目标对象 Class 类型
+     * @return <T>
+     */
+    public static <T> T copy(Object source, Class<T> targetClazz) {
         Assert.notNull(source, "Source must not be null");
-        Assert.notNull(clazz, "Target must not be null");
+        Assert.notNull(targetClazz, "targetClazz must not be null");
 
-        BeanCopier copier = BeanCopier.create(source.getClass(), clazz, false);
-        T target = newInstance(clazz);
+        BeanCopier copier = BeanCopier.create(source.getClass(), targetClazz, false);
+        T target = newInstance(targetClazz);
         copier.copy(source, target, null);
         return target;
     }
 
-    public static <T> T copyProperties(Object source, Class<T> clazz, T target) {
+    /**
+     * @param source      源对象实例
+     * @param targetClazz 目标对象 Class
+     * @param target      目标对象实例
+     * @param <T>         目标对象 Class 类型
+     * @return <T>
+     */
+    public static <T> T copyProperties(Object source, Class<T> targetClazz, T target) {
         Assert.notNull(source, "Source must not be null");
-        Assert.notNull(clazz, "Target must not be null");
+        Assert.notNull(source, "Target must not be null");
+        Assert.notNull(targetClazz, "TargetClazz must not be null");
 
-        BeanCopier copier = BeanCopier.create(source.getClass(), clazz, false);
+        BeanCopier copier = BeanCopier.create(source.getClass(), targetClazz, false);
         copier.copy(source, target, null);
         return target;
     }
 
-    public static <T> List<T> copyList(List<?> source, Class<T> clazz) {
+    /**
+     * 拷贝数组
+     *
+     * @param source      源对象实例数组
+     * @param targetClazz 目标对象 Class
+     * @param <T>         目标对象 Class 类型
+     * @return List<T>
+     */
+    public static <T> List<T> copyList(List<?> source, Class<T> targetClazz) {
         Assert.notNull(source, "Source must not be null");
-        Assert.notNull(clazz, "Target must not be null");
+        Assert.notNull(targetClazz, "Target must not be null");
 
-        BeanCopier copier = BeanCopier.create(source.get(0).getClass(), clazz, false);
+        BeanCopier copier = BeanCopier.create(source.get(0).getClass(), targetClazz, false);
         return source.stream().map(x -> {
-            T target = newInstance(clazz);
+            T target = newInstance(targetClazz);
             copier.copy(x, target, null);
             return target;
         }).collect(Collectors.toList());
     }
 
+    /**
+     * 创建目标对象实例
+     *
+     * @param clazz 目标对象 Class
+     * @param <T>   目标对象 Class 类型
+     * @return 目标类实例
+     */
     private static <T> T newInstance(Class<T> clazz) {
         try {
+            // 性能瓶颈,可以做个缓存
             return clazz.newInstance();
         } catch (Exception e) {
             log.error("缺少默认构造器", e);

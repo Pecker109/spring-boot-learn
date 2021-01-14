@@ -25,8 +25,6 @@ public class SynLazySingleton3 {
     private SynLazySingleton3() {
     }
 
-    ;
-
     public static SynLazySingleton3 getInstance() {
         if (null == instance) {
             synchronized (SynLazySingleton3.class) {

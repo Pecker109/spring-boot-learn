@@ -9,7 +9,7 @@ rocketmq:
   name-server: 10.20.141.213:9876
   topic: private-quota-topic-test
   producer:
-    group: producer-test
+    group: consumer-test
 
 #rocketmq:
 #  producer:

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.Student;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;

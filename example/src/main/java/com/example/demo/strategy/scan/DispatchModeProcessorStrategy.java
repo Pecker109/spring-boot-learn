@@ -1,7 +1,6 @@
-package com.example.demo.handler.impl;
+package com.example.demo.strategy.scan;
 
 import com.example.demo.annotation.StrategyKeyFlag;
-import com.example.demo.handler.AbstractHandler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,9 +10,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @StrategyKeyFlag(1)
-public class DispatchModeProcessor extends AbstractHandler {
+public class DispatchModeProcessorStrategy extends AbstractStrategy {
     @Override
-    public int handle() {
+    public int process() {
         System.out.println("执行策略 1 逻辑");
         return 1;
     }

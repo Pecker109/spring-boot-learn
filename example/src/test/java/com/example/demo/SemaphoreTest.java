@@ -9,26 +9,26 @@ import java.util.concurrent.TimeUnit;
  * @since 2020-06-17
  */
 public class SemaphoreTest {
-    private static Semaphore semphore = new Semaphore(5);
+    private static Semaphore semaphore = new Semaphore(5);
 
     public static void exec(int num) {
-        System.out.println("有效证书个数" + semphore.availablePermits());
-        if (semphore.getQueueLength() > 0) {
-            System.out.println("当前等待排队的任务数大约为" + semphore.getQueueLength() + "个,请稍候再试...");
+        System.out.println("有效证书个数" + semaphore.availablePermits());
+        if (semaphore.getQueueLength() > 0) {
+            System.out.println("当前等待排队的任务数大约为" + semaphore.getQueueLength() + "个,请稍候再试...");
         }
         try {
             //获取信号量
-            semphore.acquire();
+            semaphore.acquire();
             // 处理业务逻辑
-            TimeUnit.SECONDS.sleep(1);
             System.out.println("获取到有效证书,执行业务" + num);
+            TimeUnit.SECONDS.sleep(1);
             //System.out.println("--" + System.currentTimeMillis() / 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("============ error");
         } finally {
             //释放信号量
-            semphore.release();
+            semaphore.release();
         }
     }
 

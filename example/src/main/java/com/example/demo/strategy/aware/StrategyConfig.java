@@ -1,4 +1,4 @@
-package com.example.demo.bean.strategy;
+package com.example.demo.strategy.aware;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -33,6 +33,7 @@ public class StrategyConfig implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        //关键代码,
         Map<String, IStrategy> beanMap = applicationContext.getBeansOfType(IStrategy.class);
         strategyMap = beanMap.entrySet()
                 .stream()

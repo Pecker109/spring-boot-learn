@@ -1,4 +1,4 @@
-package com.example.demo.scan;
+package com.example.demo.strategy.scan;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -68,12 +68,14 @@ public class MyClassScanner {
     public static Set<Class<?>> scan(String basePackage, Class<?>... targetTypes) {
         MyClassScanner cs = new MyClassScanner();
         for (Class<?> targetType : targetTypes) {
+            //判断目标类型是否是注释类型
             if (TypeUtils.isAssignable(Annotation.class, targetType)) {
                 cs.addIncludeFilter(new AnnotationTypeFilter((Class<? extends Annotation>) targetType));
             } else {
                 cs.addIncludeFilter(new AssignableTypeFilter(targetType));
             }
         }
+        //真正扫描包
         return cs.doScan(basePackage);
     }
 
@@ -124,6 +126,7 @@ public class MyClassScanner {
     public Set<Class<?>> doScan(String basePackage) {
         Set<Class<?>> classes = new HashSet<Class<?>>();
         try {
+            // 获取包所在的全量路径名
             String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
                     + ClassUtils.convertClassNameToResourcePath(
                     SystemPropertyUtils.resolvePlaceholders(basePackage)) + "/**/*.class";

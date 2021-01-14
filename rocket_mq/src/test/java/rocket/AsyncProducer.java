@@ -7,6 +7,7 @@ import org.apache.rocketmq.common.CountDownLatch2;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,8 +26,8 @@ public class AsyncProducer {
         producer.setRetryTimesWhenSendAsyncFailed(0);
 
         int messageCount = 5;
-        // 根据消息数量实例化倒计时计算器
-        final CountDownLatch2 countDownLatch = new CountDownLatch2(messageCount);
+        // 由于是异步发送，这里引入一个countDownLatch，保证所有Producer发送消息的回调方法都执行完了再停止Producer服务
+        final CountDownLatch countDownLatch = new CountDownLatch(messageCount);
         for (int i = 0; i < messageCount; i++) {
             final int index = i;
             // 创建消息，并指定Topic，Tag和消息体
@@ -38,11 +39,13 @@ public class AsyncProducer {
             producer.send(msg, new SendCallback() {
                 @Override
                 public void onSuccess(SendResult sendResult) {
+                    countDownLatch.countDown();
                     System.out.printf("%-10d OK %s %n", index,
                             sendResult.getMsgId());
                 }
                 @Override
                 public void onException(Throwable e) {
+                    countDownLatch.countDown();
                     System.out.printf("%-10d Exception %s %n", index, e);
                     e.printStackTrace();
                 }

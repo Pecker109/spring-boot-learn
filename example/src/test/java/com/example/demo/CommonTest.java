@@ -7,5 +7,4 @@ package com.example.demo;
  */
 public class CommonTest {
 
-
 }

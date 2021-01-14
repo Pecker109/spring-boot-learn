@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,19 +8,14 @@ import lombok.NoArgsConstructor;
 /**
  * @author Pecker
  * @Description 类信息
- * @since 2020-10-16
+ * @since 2021-01-13
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class StudentDTO {
     private String name;
 
-    private Integer age;
-
-    private int ageAdd(int age) {
-        System.out.println("old age : " + age);
-        return age + 1;
-    }
+    private int age;
 }

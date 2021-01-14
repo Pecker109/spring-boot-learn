@@ -1,7 +1,6 @@
-package com.example.demo.processor;
+package com.example.demo.strategy.scan;
 
 import com.example.demo.annotation.StrategyKeyFlag;
-import com.example.demo.scan.MyClassScanner;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -12,20 +11,19 @@ import java.util.Map;
 
 /**
  * @author Pecker
- * @Description 项目启动扫描 handler 入口
+ * @Description 项目启动扫描策略类到 Spring 容器
  * @since 2020-08-23
  */
 @Component
 @SuppressWarnings({"unuse", "rawtypes"})
-public class HandlerProcessor implements BeanFactoryPostProcessor {
-
-    //标记策略 key 注解的类所在的包
-    private String basePackage = "com.example.demo.handler.impl";
+public class StrategyScanProcessor implements BeanFactoryPostProcessor {
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         Map<Integer, Class> map = new HashMap<Integer, Class>();
 
+        //标记策略 key 注解的类所在的包
+        String basePackage = "com.example.demo.strategy.scan";
         MyClassScanner.scan(basePackage, StrategyKeyFlag.class).forEach(x -> {
             int type = x.getAnnotation(StrategyKeyFlag.class).value();
             map.put(type, x);
