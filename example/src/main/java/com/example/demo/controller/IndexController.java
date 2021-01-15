@@ -17,8 +17,19 @@ import java.util.List;
 @RestController
 public class IndexController {
 
+    /**
+     * 用了这么久的 @Autowired ,都是通过字段方式注入的,作为成员变量注入,
+     * 原来 Spring 更推荐构造方法进行依赖注入
+     */
+//    @Autowired
+//    private List<AbstractChain> abstractChainList;
+
+    private final List<AbstractChain> abstractChainList;
+
     @Autowired
-    private List<AbstractChain> abstractChainList;
+    public IndexController(List<AbstractChain> abstractChainList) {
+        this.abstractChainList = abstractChainList;
+    }
 
     @GetMapping("/index1")
     @ResponseResult
