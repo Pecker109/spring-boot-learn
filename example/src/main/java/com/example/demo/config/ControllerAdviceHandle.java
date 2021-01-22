@@ -51,7 +51,7 @@ public class ControllerAdviceHandle {
         log.error("ControllerAdvice层-统一异常处理", ex);
         Map<String, Object> map = new HashMap<>();
         map.put("code", 400);
-        map.put("msg", ex);
+        map.put("msg", ex.getMessage());
         return map;
     }
 

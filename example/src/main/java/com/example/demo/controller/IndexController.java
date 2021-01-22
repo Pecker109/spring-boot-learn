@@ -4,10 +4,11 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.annotation.DoneTime;
 import com.example.demo.annotation.ResponseResult;
-import com.example.demo.chain.AbstractChain;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.request.ParamRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -16,20 +17,6 @@ import java.util.List;
  */
 @RestController
 public class IndexController {
-
-    /**
-     * 用了这么久的 @Autowired ,都是通过字段方式注入的,作为成员变量注入,
-     * 原来 Spring 更推荐构造方法进行依赖注入
-     */
-//    @Autowired
-//    private List<AbstractChain> abstractChainList;
-
-    private final List<AbstractChain> abstractChainList;
-
-    @Autowired
-    public IndexController(List<AbstractChain> abstractChainList) {
-        this.abstractChainList = abstractChainList;
-    }
 
     @GetMapping("/index1")
     @ResponseResult
@@ -44,9 +31,9 @@ public class IndexController {
         return "hello !!!";
     }
 
-    @GetMapping("/index2")
-    public String index2() {
-        return "hello hello";
+    @PostMapping("/index2")
+    public String index2(@RequestBody @Valid ParamRequest request) {
+        return request.getPwdSwitch();
     }
 
     @PostMapping("/index3")
@@ -60,14 +47,6 @@ public class IndexController {
         System.out.println(jsonStr);
 
         return jsonStr;
-    }
-
-    @GetMapping("/index4")
-    public void index4() {
-        abstractChainList.forEach(chain ->{
-            chain.process();
-            System.out.println(chain.getNext());
-        });
     }
 
 }
