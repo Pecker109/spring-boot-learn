@@ -7,3 +7,4 @@ spring boot demo
 - admin-service : 8846
 - admin-client : 8845
 - rocket : 8844
+- sharding-jdbc : 8843

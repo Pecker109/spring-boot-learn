@@ -25,6 +25,7 @@
 		<module>admin_service</module>
 		<module>example</module>
 		<module>spring-data-elasticsearch</module>
+		<module>shading-jdbc</module>
 	</modules>
 
 	<dependencyManagement>

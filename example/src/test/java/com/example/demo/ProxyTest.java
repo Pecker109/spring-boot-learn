@@ -85,9 +85,9 @@ public class ProxyTest {
 
     /**
      * CGLib 动态代理测试
-     * 1.cglib代理无需实现接口
+     * 1.cglib 代理无需实现接口,但 cglib 会继承目标对象，需要重写方法，所以目标对象不能为final类。
      * 2.通过生成类字节码实现代理，比反射稍快，不存在性能问题，
-     * 3.但 cglib 会继承目标对象，需要重写方法，所以目标对象不能为final类。
+     * 3.实现 MethodInterceptor,重写 intercept() 方法
      * <p>
      * Spring AOP 所生成的 AOP 代理就是使用的 CGLib 动态代理
      */

@@ -1,7 +1,8 @@
 package com.example.demo;
 
-import java.util.Queue;
-import java.util.Stack;
+import org.springframework.util.Assert;
+
+import java.util.Objects;
 
 /**
  * @author Pecker
@@ -11,6 +12,9 @@ import java.util.Stack;
 public class CommonTest {
     public static void main(String[] args) {
 
-    }
+        String value = null;
+        Objects.requireNonNull(value, "value 对象不为空");
+        Assert.notNull(value, "value 对象不为空");
 
+    }
 }
