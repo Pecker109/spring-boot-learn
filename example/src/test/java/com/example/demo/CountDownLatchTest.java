@@ -9,6 +9,17 @@ import java.util.concurrent.CountDownLatch;
  */
 public class CountDownLatchTest {
 
+    /**
+     * 主线程会被阻塞在await() 方法, 工作线程需要各自执行 countDown() 方法
+     * 也就是说: 主线程等所有子线程都执行完之后(执行 countDown() 方法后) 再由主线程执行 await() 后的逻辑
+     * 举个栗子 : 老师等所有同学到之后,老师给同学们讲课
+     * <p>
+     * 而 CyclicBarrier 是子线程各自调用 await() 方法,
+     * 当调用 await() 方法的子线程数量达到初始化 CyclicBarrier 设置的 parties 后,子线程同时执行各自线程的 await() 后的逻辑
+     * 举个栗子: 团队成员等所有成员到齐之后各自做各自的事情
+     *
+     * CountDownLatch 是计数器，只能使用一次，而 CyclicBarrier 的计数器提供 reset 功能，可以多次使用
+     */
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(10);
 

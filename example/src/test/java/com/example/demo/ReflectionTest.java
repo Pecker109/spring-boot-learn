@@ -23,7 +23,7 @@ public class ReflectionTest {
             System.out.println(method.getName());
         }
 
-        //Class  --> Constructor --> Method  --> Field
+        //Class  --> Constructor --> Constructor#newInstance() --> Method  --> Field
 
         //Class  : 获取类的 Class 对象实例
         Class<?> clz = Class.forName(Student.class.getName());

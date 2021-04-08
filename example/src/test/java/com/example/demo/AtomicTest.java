@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author Pecker
  * @Description 类信息
@@ -12,12 +10,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AtomicTest {
 
     public static void main(String[] args) {
-        new HashMap<>();
-        new ConcurrentHashMap<>();
-        new ArrayList<>();
-        new CopyOnWriteArrayList<>();
 
+        AtomicInteger atomic = new AtomicInteger();
 
+        // CAS 更新值
+        boolean compareAndSet = atomic.compareAndSet(0, 1);
+        System.out.println(compareAndSet);
+
+        // 先加 1 再get
+        System.out.println(atomic.incrementAndGet());
+        System.out.println(atomic.get());
+
+        // 先 get 原来的值再加 1
+        System.out.println(atomic.getAndIncrement());
+        System.out.println(atomic.get());
+
+        // 先 get 原来的值再减 1
+        System.out.println(atomic.getAndDecrement());
+        System.out.println(atomic.get());
     }
 
 

@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Predicate;
 
 /**
@@ -26,6 +27,7 @@ public class ThreadPoolTest {
         int begin = 0;
         int interval = 1;
         do {
+            pool.execute(() -> System.out.println("doWorker..."));
             begin = pool.submit(new ThreadPoolTest.SelectTask(begin, interval)).get();
             //System.out.println("begin...." + begin);
         } while (begin <= total);

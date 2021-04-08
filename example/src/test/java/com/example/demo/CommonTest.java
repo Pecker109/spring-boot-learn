@@ -1,11 +1,7 @@
 package com.example.demo;
 
-import org.springframework.util.Assert;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.ServiceLoader;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * @author Pecker
@@ -13,7 +9,15 @@ import java.util.ServiceLoader;
  * @since 2020-10-12
  */
 public class CommonTest {
-    public static void main(String[] args) {
-    }
 
+    public static void main(String[] args) {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap();
+        map.put("A", "val-A");
+        map.put("B", "val-B");
+        map.put("C", "val-C");
+        map.put("D", "val-D");
+        System.out.println(map.get("A"));
+
+        StringBuffer sb = new StringBuffer();
+    }
 }

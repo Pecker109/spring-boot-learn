@@ -29,7 +29,7 @@ public class SocketServerDemo {
          * 2.多路复用 : 一个线程解决所有连接请求,多个通路一个线程处理
          * 3.多路复用器 Selector: 可以把多路复用器理解为: 多路复用器维护着一个事件集合rdList , 不同类型的事件会存在同一个集合中
          * 4.多路复用器实现模型 : select、poll、epol
-         * 5.Channel : NIO 编程思想就是通过处理不同的 Channel 来进行操作
+         * 5.Channel : NIO 编程思想就是通过处理不同的 Channel 来进行操作,Channel 中包含事件类型和请求数据
          *      客户端连接: ServerSocketChannel
          *      读取客户端数据: SocketChannel
          */
@@ -44,9 +44,11 @@ public class SocketServerDemo {
         serverSocket.bind(new InetSocketAddress(9000));
 
         // 多路复用器 selector
-        // 不同的操作系统返回的多路复用器不同,Linux 内核会创建 ePoll 模型
-        Selector selector = Selector.open();//文件描述符
+        // 不同的操作系统返回的多路复用器不同,JDK 1.5 之后会在 Linux 内核创建 ePoll 模型
+        // 底层会调用 Linux 内核函数 epoll_create()创建 Epoll 实例
+        Selector selector = Selector.open();
         //注意: ServerSocketChannel 只能注册SelectionKey.OP_ACCEPT事件
+        // 底层会调用 Linux 内核函数 epoll_ctl() 注册新的fd(channel)到 epfd(epfd 的 rdList)中
         ssc.register(selector, SelectionKey.OP_ACCEPT);
 
         try {

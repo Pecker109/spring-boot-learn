@@ -66,7 +66,7 @@ public class ProtostuffUtil {
     }
 
     public static void main(String[] args) {
-        byte[] userBytes = ProtostuffUtil.serializer(new User(1, "zhuge"));
+        byte[] userBytes = ProtostuffUtil.serializer(new User(1, "用户名 123"));
         User user = ProtostuffUtil.deserializer(userBytes, User.class);
         System.out.println(user);
     }
