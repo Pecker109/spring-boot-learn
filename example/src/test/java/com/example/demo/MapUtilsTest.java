@@ -3,6 +3,7 @@ package com.example.demo;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.MapUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,5 +30,16 @@ public class MapUtilsTest {
 
         int code = openStatus ? 0 : 1;
         System.out.println(code);
+
+        String name = (String) map.getOrDefault("name", "default_name");
+        System.out.println(name);
+
+        map.putIfAbsent("name", "default_name123");
+
+        HashMap<String, Integer> intMap = new HashMap<>();
+        intMap.put("status", 12);
+        // key 不存在则给定默认值,存在则执行后面的 function
+        intMap.merge("status", 1, Integer::sum);
+        System.out.println(intMap.get("status"));
     }
 }

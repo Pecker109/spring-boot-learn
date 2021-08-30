@@ -1,17 +1,13 @@
 package com.example.demo.aspect;
 
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.annotation.DoneTime;
+import org.apache.commons.lang3.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
-import java.util.Date;
 
 /**
  * @author Pecker
@@ -25,12 +21,18 @@ public class DoneTimeAspect {
 
     @Around(value = "@annotation(doneTime)")
     public Object around(ProceedingJoinPoint joinPoint, DoneTime doneTime) throws Throwable {
+        StopWatch stopWatch = StopWatch.createStarted();
+        try {
+            System.out.println("doneTime.param()" + doneTime.param());
+            System.out.println("执行" + joinPoint.getSignature().toShortString() + "方法,参数 request = " + JSON.toJSONString(joinPoint.getArgs()));
+            Object o = joinPoint.proceed();
+            return o;
+        } finally {
+            stopWatch.stop();
+            System.out.println(joinPoint.getSignature().toShortString() + "执行耗时:" + stopWatch.getTime() + "毫秒");
+        }
 
-        System.out.println("doneTime.param()"+doneTime.param());
-        System.out.println("方法开始时间是:" + new Date());
-        Object o = joinPoint.proceed();
-        System.out.println("方法结束时间是:" + new Date());
-        return o;
+
     }
 
    /* @Pointcut("@annotation(com.example.demo.annotation.DoneTime)")

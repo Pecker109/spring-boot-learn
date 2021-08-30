@@ -1,9 +1,12 @@
 package com.example.demo;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.model.Student;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -59,5 +62,15 @@ public class ReflectionTest {
         System.out.println(newAge);
 
         //Field : final 修饰的字段不初始化,赋值放在构造函数中,后续也是可以更改 final 修饰的值￿￿
+        Student student = new Student();
+        student.setName("张三");
+        student.setAge(18);
+        Field[] fields = Student.class.getDeclaredFields();
+        JSONObject jsonObject = new JSONObject(BeanUtil.beanToMap(student));
+        for (Field field : fields) {
+            System.out.println(field.getName());
+            System.out.println(field.getType());
+            System.out.println(jsonObject.get(field.getName()));
+        }
     }
 }

@@ -1,7 +1,12 @@
 package com.example.demo;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import com.example.demo.model.Student;
+import lombok.SneakyThrows;
+import org.apache.commons.beanutils.BeanUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Pecker
@@ -10,14 +15,31 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  */
 public class CommonTest {
 
-    public static void main(String[] args) {
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap();
-        map.put("A", "val-A");
-        map.put("B", "val-B");
-        map.put("C", "val-C");
-        map.put("D", "val-D");
-        System.out.println(map.get("A"));
 
-        StringBuffer sb = new StringBuffer();
+    @SneakyThrows
+    public static void main(String[] args) {
+
+        // 如何把list集合拼接成以逗号分隔的字符串 a,b,c
+        List<String> list = Arrays.asList("a", "b", "c");
+        // 第一种方法，可以用stream流
+        String join = String.join(",", list);
+        System.out.println(join);
+
+
+        Student student = new Student();
+        BeanUtils.setProperty(student, "name", "zhangsan");
+        BeanUtils.setProperty(student, "age", 18);
+        System.out.println(BeanUtils.getProperty(student, "name"));
+        System.out.println(student);
+
+        // 对象转 map
+        Map<String, String> map = BeanUtils.describe(student);
+        System.out.println(map);
+
+        // map 转对象
+        Student newStudent = new Student();
+        BeanUtils.populate(newStudent, map);
+
     }
+
 }

@@ -16,9 +16,10 @@ public class ClassUtil {
 
     /**
      * 获取某个类的实现类
+     *
      * @param cls cls
      * @return cls 的子类
-     * @throws  Exception Exception
+     * @throws Exception Exception
      */
     public static List<Class<?>> getAllAssignedClass(Class<?> cls) throws Exception {
         List<Class<?>> classes = new ArrayList<Class<?>>();
@@ -32,6 +33,7 @@ public class ClassUtil {
 
     /**
      * 获取类所在包的所有类
+     *
      * @param cls cls
      * @return 当前类所在包的所有类
      * @throws Exception Exception
@@ -46,8 +48,9 @@ public class ClassUtil {
 
     /**
      * 根据路径获取类
+     *
      * @param dir 文件路径
-     * @param pk 包
+     * @param pk  包
      * @return 类
      * @throws ClassNotFoundException ClassNotFoundException
      */
@@ -70,6 +73,7 @@ public class ClassUtil {
 
     /**
      * 动态获取，根据反射，比如获取xx.xx.xx.xx.Action 这个所有的实现类。 xx.xx.xx.xx 表示包名  Action为接口名或者类名
+     *
      * @param classPackageAndName 类包
      * @return return
      * @throws Exception Exception

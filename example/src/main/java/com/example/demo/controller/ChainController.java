@@ -28,7 +28,7 @@ public class ChainController {
         this.abstractChainList = abstractChainList;
     }
 
-    @GetMapping("/index4")
+    @GetMapping("/chain")
     public void index4() {
         abstractChainList.forEach(chain ->{
             chain.process();

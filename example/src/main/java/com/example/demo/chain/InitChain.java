@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class InitChain {
     @PostConstruct
     public void initChain() {
         //排序
-        Collections.sort(abstractChainList, AnnotationAwareOrderComparator.INSTANCE);
+        abstractChainList.sort(AnnotationAwareOrderComparator.INSTANCE);
 
         //设置 next 参数
         int size = abstractChainList.size();

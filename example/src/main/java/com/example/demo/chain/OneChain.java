@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @Description 类信息
  * @since 2021-01-14
  */
-@Order(2)
+@Order(1)
 @Component
 public class OneChain extends AbstractChain {
     @Override

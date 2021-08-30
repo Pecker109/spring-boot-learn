@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.*;
@@ -23,6 +24,7 @@ public class SerializableTest {
     @Data
     static class Student implements Serializable{
         //private static final long serialVersionUID = -209591688481019532L;
+        @JsonProperty(value = "userName")
         private  String name;
         private int age;
     }

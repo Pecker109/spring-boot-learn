@@ -48,13 +48,14 @@ public class ProxyTest {
     static void jdkProxyTest() {
         /**
          * JDK 动态代理 :
-         * 1.父类必然是 Proxy ,这也为什么说 JDK 动态代理只能代理接口
+         * 1.父类必然是 Proxy ,这也为什么说对于没有实现接口的类无法被 JDK 动态代理
          * 2.必须实现 InvocationHandler 接口
          * 3.通过反射代理方法，比较消耗系统性能，但可以减少代理类的数量，使用更灵活
          */
         // 调用过程 : Proxy --> InvocationHandler --> 目标对象方法
         IUserDao target = new UserDao();
         System.out.println("目标调用对象:" + target.getClass());  //输出目标对象信息
+
         IUserDao proxy = (IUserDao) new JDKProxyFactory(target).getProxyInstance();
         System.out.println("代理对象" + proxy.getClass());  //输出代理对象信息
         proxy.save();

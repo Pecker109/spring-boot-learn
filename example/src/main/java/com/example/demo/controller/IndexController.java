@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.demo.annotation.DoneTime;
 import com.example.demo.annotation.ResponseResult;
+import com.example.demo.model.request.Index3Request;
 import com.example.demo.request.ParamRequest;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 /**
@@ -28,7 +26,7 @@ public class IndexController {
         System.out.println("从 ModelAttribute 获取参数" + modelUser);
         System.out.println("从 RequestParam 获取参数" + url);
         System.out.println("方法执行");
-        return "hello !!!";
+        return "!!! hello !!!";
     }
 
     @PostMapping("/index2")
@@ -36,17 +34,11 @@ public class IndexController {
         return request.getPwdSwitch();
     }
 
+    @DoneTime
     @PostMapping("/index3")
-    public String index3(@RequestParam String arrStr) {
-        System.out.println("解析字符串 TO 数组 :");
-        List<String> parseArray = JSONObject.parseArray(arrStr, String.class);
-        System.out.println(parseArray);
+    public String index3(@RequestBody Index3Request request) {
 
-        System.out.println("解析数组 TO 字符串 :");
-        String jsonStr = JSONObject.toJSONString(parseArray);
-        System.out.println(jsonStr);
-
-        return jsonStr;
+        return request.getArrStr();
     }
 
 }
