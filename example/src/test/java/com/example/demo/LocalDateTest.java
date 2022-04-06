@@ -17,6 +17,28 @@ public class LocalDateTest {
         long2LocalDate();
     }
 
+    public static void duration2Day() {
+        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime1 = LocalDateTime.parse("2020-05-21 00:00:01", dateTimeFormatter1);
+        LocalDateTime dateTime2 = LocalDateTime.parse("2020-05-20 23:59:59", dateTimeFormatter1);
+        System.out.println("字符串转换locaDateTime==" + dateTime1);
+        System.out.println("字符串转换locaDateTime==" + dateTime2);
+
+        //计算时间差
+        Duration duration = Duration.between(dateTime2, dateTime1);
+        System.out.println("相差天数==" + duration.toDays());
+
+        LocalDate start = LocalDate.parse("2020-05-20");
+        LocalDate end = LocalDate.parse("2020-05-20");
+        long days = start.until(end, ChronoUnit.DAYS);
+        System.out.println("间隔：" + days + "天");
+    }
+
+    public static void long2LocalDate() {
+        long timestamp = 1619579420136L;
+        System.out.println("Long 转 LocalDate:" + LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault()).toLocalDate());
+
+    }
 
     public void all() {
 
@@ -63,29 +85,6 @@ public class LocalDateTest {
         System.out.println("间隔：" + year + "年");
         System.out.println("间隔：" + month + "月");
         System.out.println("间隔：" + days + "天");
-    }
-
-    public static void duration2Day() {
-        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime1 = LocalDateTime.parse("2020-05-21 00:00:01", dateTimeFormatter1);
-        LocalDateTime dateTime2 = LocalDateTime.parse("2020-05-20 23:59:59", dateTimeFormatter1);
-        System.out.println("字符串转换locaDateTime==" + dateTime1);
-        System.out.println("字符串转换locaDateTime==" + dateTime2);
-
-        //计算时间差
-        Duration duration = Duration.between(dateTime2, dateTime1);
-        System.out.println("相差天数==" + duration.toDays());
-
-        LocalDate start = LocalDate.parse("2020-05-20");
-        LocalDate end = LocalDate.parse("2020-05-20");
-        long days = start.until(end, ChronoUnit.DAYS);
-        System.out.println("间隔：" + days + "天");
-    }
-
-    public static void long2LocalDate() {
-        long timestamp = 1619579420136L;
-        System.out.println("Long 转 LocalDate:" + LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault()).toLocalDate());
-
     }
 
 }

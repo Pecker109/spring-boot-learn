@@ -5,8 +5,10 @@ package com.example.demo.util;
  * @Description 类信息
  * @since 2020-12-09
  */
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class DateConverter implements Converter<String, Date> {
     @Override
     public Date convert(String value) {
 
-        if(StringUtils.isEmpty(value)) {
+        if (StringUtils.isEmpty(value)) {
             return null;
         }
 

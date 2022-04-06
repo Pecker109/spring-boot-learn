@@ -17,7 +17,10 @@
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+		<spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
 	</properties>
+
 
 	<modules>
 		<module>apollo</module>
@@ -26,9 +29,31 @@
 		<module>example</module>
 		<module>spring-data-elasticsearch</module>
 		<module>sharding-jdbc</module>
-	</modules>
+        <module>mybatis-plus-example</module>
+        <module>sentinel</module>
+        <module>nacos</module>
+        <module>spring-security</module>
+    </modules>
 
 	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
 
 	</dependencyManagement>
 

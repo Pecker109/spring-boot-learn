@@ -1,9 +1,10 @@
 package com.example.demo.mybatis.model;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -12,200 +13,200 @@ public class SiteInfo {
     private String id;
 
     /**
-    * url
-    */
+     * url
+     */
     private String url;
 
     /**
-    * 网站标题
-    */
+     * 网站标题
+     */
     private String title;
 
     /**
-    * icp信息
-    */
+     * icp信息
+     */
     private String icpInfo;
 
     /**
-    * whois信息
-    */
+     * whois信息
+     */
     private String whoisInfo;
 
     /**
-    * 一级域名
-    */
+     * 一级域名
+     */
     private String domain1;
 
     /**
-    * 域名
-    */
+     * 域名
+     */
     private String domain;
 
     /**
-    * 行政归属地址
-    */
+     * 行政归属地址
+     */
     private String adminLocation;
 
     /**
-    * 端口
-    */
+     * 端口
+     */
     private Integer port;
 
     /**
-    * 指纹信息
-    */
+     * 指纹信息
+     */
     private String finger;
 
     /**
-    * 协议
-    */
+     * 协议
+     */
     private Boolean isHttps;
 
     /**
-    * 添加人(登录名称)
-    */
+     * 添加人(登录名称)
+     */
     private String createUser;
 
     /**
-    * 添加时间
-    */
+     * 添加时间
+     */
     private Date createTime;
 
     /**
-    * ip
-    */
+     * ip
+     */
     private String ip;
 
     /**
-    * 网站归属单位
-    */
+     * 网站归属单位
+     */
     private String unit;
 
     /**
-    * 站点类型，1：云防护 2：url 3:ip
-    */
+     * 站点类型，1：云防护 2：url 3:ip
+     */
     private Integer type;
 
     /**
-    * 归属行业
-    */
+     * 归属行业
+     */
     private String industry;
 
     /**
-    * 自定义名称
-    */
+     * 自定义名称
+     */
     private String cname;
 
     /**
-    * 是否解析 1-是 0-否
-    */
+     * 是否解析 1-是 0-否
+     */
     private Boolean isParse;
 
     /**
-    * 1 已审核  其他 未审核
-    */
+     * 1 已审核  其他 未审核
+     */
     private Integer checked;
 
     /**
-    * 审核状态  -未通过—0，通过—1, 已转正式—2
-    */
+     * 审核状态  -未通过—0，通过—1, 已转正式—2
+     */
     private Integer checkedStatus;
 
     /**
-    * 审核人
-    */
+     * 审核人
+     */
     private String checkedUser;
 
     /**
-    * 审核时候
-    */
+     * 审核时候
+     */
     private Date checkedTime;
 
     /**
-    * 审核失败原因
-    */
+     * 审核失败原因
+     */
     private String failReason;
 
     /**
-    * 是否失效 1-是  0-否
-    */
+     * 是否失效 1-是  0-否
+     */
     private Boolean isDeleted;
 
     /**
-    * 最后更新时间
-    */
+     * 最后更新时间
+     */
     private Date lastModifiedTime;
 
     /**
-    * 是否自动补全过信息
-    */
+     * 是否自动补全过信息
+     */
     private Integer autoParseTag;
 
     /**
-    * 真实地址
-    */
+     * 真实地址
+     */
     private String realUrl;
 
     /**
-    * 备注信息
-    */
+     * 备注信息
+     */
     private String mark;
 
     /**
-    * 端口分离 访问端口
-    */
+     * 端口分离 访问端口
+     */
     private Integer fPort;
 
     /**
-    * 是否开启端口分离 0-否 1-是
-    */
+     * 是否开启端口分离 0-否 1-是
+     */
     private Boolean isFport;
 
     /**
-    * 是否回源   0-非回源  1-回源
-    */
+     * 是否回源   0-非回源  1-回源
+     */
     private Boolean isSrc;
 
     private String entityId;
 
     /**
-    * 最后修改人
-    */
+     * 最后修改人
+     */
     private String lastModifiedUser;
 
     /**
-    * 资产类型:1-云主机 2-私有云
-    */
+     * 资产类型:1-云主机 2-私有云
+     */
     private Integer assetType;
 
     /**
-    * 资产名称
-    */
+     * 资产名称
+     */
     private String assetName;
 
     /**
-    * 部署位置
-    */
+     * 部署位置
+     */
     private String deployLocation;
 
     /**
-    * 部署类型1-域名 2-ip(站点资产特有)
-    */
+     * 部署类型1-域名 2-ip(站点资产特有)
+     */
     private Integer deployType;
 
     /**
-    * 资产来源
-    */
+     * 资产来源
+     */
     private Integer assetSource;
 
     /**
-    * 内网 ip(主机资产特有)
-    */
+     * 内网 ip(主机资产特有)
+     */
     private String privateNetIp;
 
     /**
-    * 网络
-    */
+     * 网络
+     */
     private String network;
 
     public String getId() {

@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.service.SpiDemoService;
-import org.springframework.aop.framework.AopContext;
 
 /**
  * @author Pecker
@@ -11,6 +10,6 @@ import org.springframework.aop.framework.AopContext;
 public class SpiDemoServiceImpl implements SpiDemoService {
     @Override
     public void work() {
-        System.out.println("do work ....");
+        System.out.println("SPI ,do work ....");
     }
 }

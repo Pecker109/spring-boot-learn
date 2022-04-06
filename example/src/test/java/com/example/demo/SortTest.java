@@ -41,7 +41,7 @@ public class SortTest {
         System.out.println(JSON.toJSONString(map.keySet()));
 
         //按照list 中的对象的某个属性排序
-        list.stream().sorted(Comparator.comparing(Obj::getPrice,Comparator.nullsFirst(BigDecimal::compareTo)).reversed()).collect(Collectors.toList()).forEach(System.out::println);
+        list.stream().sorted(Comparator.comparing(Obj::getPrice, Comparator.nullsFirst(BigDecimal::compareTo)).reversed()).collect(Collectors.toList()).forEach(System.out::println);
 
         //按照自定义排序
         list.stream().sorted(
@@ -72,6 +72,16 @@ public class SortTest {
 
     }
 
+    public static void sortLong() {
+        List<KeyValue> list = new ArrayList<>();
+        KeyValue keyValue1 = new KeyValue("key", 10L);
+        KeyValue keyValue2 = new KeyValue("key", 20L);
+        list.add(keyValue1);
+        list.add(keyValue2);
+        list.stream().sorted(Comparator.comparing(KeyValue::getValue, Long::compareTo).reversed())
+                .collect(Collectors.toList()).forEach(System.out::println);
+    }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -86,15 +96,5 @@ public class SortTest {
     public static class KeyValue {
         private String key;
         private Long value;
-    }
-
-    public static void sortLong(){
-        List<KeyValue> list = new ArrayList<>();
-        KeyValue keyValue1 = new KeyValue("key", 10L);
-        KeyValue keyValue2 = new KeyValue("key", 20L);
-        list.add(keyValue1);
-        list.add(keyValue2);
-        list.stream().sorted(Comparator.comparing(KeyValue::getValue, Long::compareTo).reversed())
-                .collect(Collectors.toList()).forEach(System.out::println);
     }
 }

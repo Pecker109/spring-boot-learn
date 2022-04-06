@@ -17,6 +17,6 @@ public class CommonTest {
         list.add("202001");
         list.add("202012");
         list = list.stream().sorted().collect(Collectors.toList());
-        list.forEach(str -> System.out.println(str));
+        list.forEach(System.out::println);
     }
 }

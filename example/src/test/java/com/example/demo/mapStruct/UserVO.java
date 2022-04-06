@@ -22,6 +22,7 @@ public class UserVO {
     private String createTime;
     private List<UserConfig> config;
     private String test; // 测试字段
+
     @Data
     public static class UserConfig {
         private String field1;

@@ -15,9 +15,8 @@ import java.util.List;
  * 1、改变JVM的启动参数，将堆的最小值和最大值设成一样，这样就可以避免堆自动扩展（其实不一样也可以）
  * 2、不断产生对象
  * 3、使用一个List来保存对象，保持对象存活
- *
+ * <p>
  * JVM配置参数： -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError
- *
  */
 public class HeapOOMTest {
 

@@ -1,14 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.model.Student;
-import lombok.SneakyThrows;
-import org.apache.commons.beanutils.BeanUtils;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 /**
+ * idea 破解方式连接:https://www.exception.site/essay/how-to-free-use-intellij-idea-2019-3
+ * 修改了配置文件: /Users/apple/Library/Application Support/JetBrains/IntelliJIdea2021.3/idea.vmoptions 的方式
+ * 添加了配置:-javaagent:/Users/apple/Applications/conf/idea/ja-netfilter/ja-netfilter.jar
+ *
  * @author Pecker
  * @Description 类信息
  * @since 2020-10-12
@@ -16,30 +12,10 @@ import java.util.Map;
 public class CommonTest {
 
 
-    @SneakyThrows
-    public static void main(String[] args) {
-
-        // 如何把list集合拼接成以逗号分隔的字符串 a,b,c
-        List<String> list = Arrays.asList("a", "b", "c");
-        // 第一种方法，可以用stream流
-        String join = String.join(",", list);
-        System.out.println(join);
-
-
-        Student student = new Student();
-        BeanUtils.setProperty(student, "name", "zhangsan");
-        BeanUtils.setProperty(student, "age", 18);
-        System.out.println(BeanUtils.getProperty(student, "name"));
-        System.out.println(student);
-
-        // 对象转 map
-        Map<String, String> map = BeanUtils.describe(student);
-        System.out.println(map);
-
-        // map 转对象
-        Student newStudent = new Student();
-        BeanUtils.populate(newStudent, map);
-
+    public static void main(String[] args) throws Exception {
+        for (int i = 0; i < 100; i++) {
+            int a = i - 1;
+        }
     }
 
 }

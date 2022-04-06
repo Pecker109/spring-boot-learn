@@ -7,7 +7,7 @@ package com.example.demo.strategy.aware;
  */
 public enum StrategyEnum {
 
-    Strategy1(1,"策略 1"),
+    Strategy1(1, "策略 1"),
     Strategy2(2, "策略 2");
     private Integer type;
     private String tag;

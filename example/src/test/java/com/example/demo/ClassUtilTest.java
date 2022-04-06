@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ClassUtilTest {
     public static void main(String[] args) throws Exception {
-        List<Class<?>> classList =  ClassUtil.getAllAssignedClass(Handler.class);
-        classList.forEach( cls -> System.out.println(cls.getName()));
+        List<Class<?>> classList = ClassUtil.getAllAssignedClass(Handler.class);
+        classList.forEach(cls -> System.out.println(cls.getName()));
     }
 }

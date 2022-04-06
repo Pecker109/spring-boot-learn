@@ -31,32 +31,13 @@ import java.util.Set;
  * @since 2020-08-23
  */
 public class MyClassScanner {
-    //获取Spring资源解析器
-    private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
     //包含的
     private final List<TypeFilter> includeFilters = new ArrayList<TypeFilter>();
     //不包含的
     private final List<TypeFilter> excludeFilters = new ArrayList<TypeFilter>();
-
+    //获取Spring资源解析器
+    private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
     private MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
-
-    /**
-     * 添加包含的Filter
-     *
-     * @param includeFilter includeFilter
-     */
-    public void addIncludeFilter(TypeFilter includeFilter) {
-        this.includeFilters.add(includeFilter);
-    }
-
-    /**
-     * 添加排除的Filter
-     *
-     * @param excludeFilter excludeFilter
-     */
-    public void addExcludeFilter(TypeFilter excludeFilter) {
-        this.excludeFilters.add(excludeFilter);
-    }
 
     /**
      * 扫描指定的包，获取包下所有的Class
@@ -101,6 +82,24 @@ public class MyClassScanner {
             classes.addAll(cs.doScan(s));
         }
         return classes;
+    }
+
+    /**
+     * 添加包含的Filter
+     *
+     * @param includeFilter includeFilter
+     */
+    public void addIncludeFilter(TypeFilter includeFilter) {
+        this.includeFilters.add(includeFilter);
+    }
+
+    /**
+     * 添加排除的Filter
+     *
+     * @param excludeFilter excludeFilter
+     */
+    public void addExcludeFilter(TypeFilter excludeFilter) {
+        this.excludeFilters.add(excludeFilter);
     }
 
     /**

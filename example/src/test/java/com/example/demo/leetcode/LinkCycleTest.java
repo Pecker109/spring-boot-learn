@@ -8,12 +8,6 @@ package com.example.demo.leetcode;
  */
 public class LinkCycleTest {
 
-    //定义链表类
-    public class ListNode {
-        ListNode current;
-        ListNode next;
-    }
-
     //判断链表成环的方法
     ListNode get(ListNode node) {
         if (null == node) {
@@ -34,5 +28,11 @@ public class LinkCycleTest {
             }
         }
         return null;
+    }
+
+    //定义链表类
+    public class ListNode {
+        ListNode current;
+        ListNode next;
     }
 }

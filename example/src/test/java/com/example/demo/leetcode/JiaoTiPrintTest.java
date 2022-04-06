@@ -12,7 +12,7 @@ public class JiaoTiPrintTest {
     /**
      * 实现思路:
      * 一个线程对应一个信号量对象  t0 -> t1 -> t2 -> t0  :  [s0 , s1 , s2]
-     *
+     * <p>
      * 要解决的问题
      * 1.线程如何被阻塞: 靠 semaphores#acquire() 方法
      * 2.保证从 t0 线程开始执行 : 初始化信号量数组就阻塞住非 t0 线程
@@ -39,7 +39,7 @@ public class JiaoTiPrintTest {
 //            if (i != THREAD_COUNT -1) {
 //                semaphores[i].acquire();
 //            }
-            if (i != 0){
+            if (i != 0) {
                 semaphores[i].acquire();
             }
         }

@@ -10,14 +10,14 @@ package com.example.demo.singleton;
  */
 public class StaticInternalSingleton5 {
 
-    private static class SingletonHolder {
-        private static final StaticInternalSingleton5 INSTANCE = new StaticInternalSingleton5();
-    }
-
     private StaticInternalSingleton5() {
     }
 
     public static final StaticInternalSingleton5 getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+
+    private static class SingletonHolder {
+        private static final StaticInternalSingleton5 INSTANCE = new StaticInternalSingleton5();
     }
 }

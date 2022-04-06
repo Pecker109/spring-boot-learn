@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 @Component
 public class TaskTest {
 
+    public static Random random = new Random();
+
     @Async
     public void doTask(int i) {
         System.out.println("开始执行======i:" + i);
@@ -43,8 +45,6 @@ public class TaskTest {
             pool.shutdown();
         }
     }
-
-    public static Random random = new Random();
 
     public void doTaskOne() throws Exception {
         System.out.println("开始做任务一");

@@ -1,7 +1,6 @@
 package com.example.demo.mapStruct;
 
 import com.alibaba.fastjson.JSON;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;

@@ -19,6 +19,7 @@ public @interface RedisLock {
      * @return
      */
     String key();
+
     /**
      * 锁的过期秒数,默认是5秒
      *

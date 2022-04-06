@@ -4,8 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.ExecutorService;
@@ -71,6 +69,7 @@ public class AsyncTest {
 
     /**
      * 异步调用,被调用方法也是用多线程执行
+     *
      * @throws InterruptedException
      */
     @Test

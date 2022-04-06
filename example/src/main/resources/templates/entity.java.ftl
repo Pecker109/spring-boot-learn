@@ -5,8 +5,8 @@ import lombok.Data;
 
 /**
 * <p>
-* ${tableComment}
-* </p>
+    * ${tableComment}
+    * </p>
 *
 * @author ${author}
 * @since ${date}

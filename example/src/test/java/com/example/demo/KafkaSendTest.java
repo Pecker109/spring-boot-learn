@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.util.Properties;
-
 /**
  * @author Pecker
  * @Description 类信息

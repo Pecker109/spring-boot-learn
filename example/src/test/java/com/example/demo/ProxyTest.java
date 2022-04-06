@@ -29,22 +29,6 @@ public class ProxyTest {
         cglibProxyTest();
     }
 
-    /**
-     * 被代理接口
-     */
-    public interface IUserDao {
-        void save();
-    }
-
-    public static class UserDao implements IUserDao {
-
-        @Override
-        public void save() {
-            System.out.println("保存数据");
-        }
-    }
-
-
     static void jdkProxyTest() {
         /**
          * JDK 动态代理 :
@@ -61,6 +45,44 @@ public class ProxyTest {
         proxy.save();
     }
 
+    /**
+     * CGLIB(Code Generation Library)是一个基于ASM的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。
+     * CGLIB 通过继承方式实现代理。很多知名的开源框架都使用到了CGLIB，
+     * 例如 Spring 中的 AOP 模块中：如果目标对象实现了接口，则默认采用 JDK 动态代理，否则采用 CGLIB 动态代理。
+     * <p>
+     * CGLib 动态代理测试
+     * 1.cglib 代理无需实现接口,但 cglib 会继承目标对象，需要重写方法，所以目标对象不能为final类。
+     * 2.通过生成类字节码实现代理，比反射稍快，不存在性能问题，
+     * 3.实现 MethodInterceptor,重写 intercept() 方法
+     * <p>
+     * Spring AOP 所生成的 AOP 代理就是使用的 CGLib 动态代理
+     */
+    static void cglibProxyTest() {
+        //目标对象
+        UserDao target = new UserDao();
+        System.out.println(target.getClass());
+        //代理对象
+        UserDao proxy = (UserDao) new CglibProxyFactory(target).getProxyInstance();
+        System.out.println(proxy.getClass());
+        //执行代理对象方法
+        proxy.save();
+    }
+
+
+    /**
+     * 被代理接口
+     */
+    public interface IUserDao {
+        void save();
+    }
+
+    public static class UserDao implements IUserDao {
+
+        @Override
+        public void save() {
+            System.out.println("保存数据");
+        }
+    }
 
     //生成代理对象工厂类
     public static class JDKProxyFactory {
@@ -88,30 +110,6 @@ public class ProxyTest {
                         return null;
                     });
         }
-    }
-
-
-    /**
-     * CGLIB(Code Generation Library)是一个基于ASM的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。
-     * CGLIB 通过继承方式实现代理。很多知名的开源框架都使用到了CGLIB，
-     * 例如 Spring 中的 AOP 模块中：如果目标对象实现了接口，则默认采用 JDK 动态代理，否则采用 CGLIB 动态代理。
-     *
-     * CGLib 动态代理测试
-     * 1.cglib 代理无需实现接口,但 cglib 会继承目标对象，需要重写方法，所以目标对象不能为final类。
-     * 2.通过生成类字节码实现代理，比反射稍快，不存在性能问题，
-     * 3.实现 MethodInterceptor,重写 intercept() 方法
-     * <p>
-     * Spring AOP 所生成的 AOP 代理就是使用的 CGLib 动态代理
-     */
-    static void cglibProxyTest() {
-        //目标对象
-        UserDao target = new UserDao();
-        System.out.println(target.getClass());
-        //代理对象
-        UserDao proxy = (UserDao) new CglibProxyFactory(target).getProxyInstance();
-        System.out.println(proxy.getClass());
-        //执行代理对象方法
-        proxy.save();
     }
 
     public static class CglibProxyFactory implements MethodInterceptor {

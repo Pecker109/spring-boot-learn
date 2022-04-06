@@ -28,7 +28,7 @@ import static java.lang.System.out;
 public class StreamTest {
 
     public static void main(String[] args) {
-        unordered();
+        match();
     }
 
     /**

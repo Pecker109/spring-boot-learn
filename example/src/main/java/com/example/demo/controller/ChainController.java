@@ -30,9 +30,6 @@ public class ChainController {
 
     @GetMapping("/chain")
     public void index4() {
-        abstractChainList.forEach(chain ->{
-            chain.process();
-            System.out.println(chain.getNext());
-        });
+        abstractChainList.forEach(AbstractChain::process);
     }
 }

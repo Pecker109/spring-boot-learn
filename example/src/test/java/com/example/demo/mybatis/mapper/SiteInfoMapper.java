@@ -1,8 +1,9 @@
 package com.example.demo.mybatis.mapper;
 
 import com.example.demo.mybatis.model.SiteInfo;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SiteInfoMapper {
     int deleteByPrimaryKey(String id);

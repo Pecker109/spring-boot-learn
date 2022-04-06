@@ -4,11 +4,9 @@ import com.example.demo.annotation.RedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
@@ -36,7 +34,7 @@ public class RedisLockAspect {
             //原子操作
             Boolean result = redisTemplate.opsForValue()
                     .setIfAbsent(redisLock.key(), redisValue, redisLock.expire(), redisLock.timeUnit());
-            if (!result){
+            if (!result) {
                 //加锁失败,已有任务成功加锁
                 return null;
             }

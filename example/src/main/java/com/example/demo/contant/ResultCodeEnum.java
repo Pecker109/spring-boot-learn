@@ -13,6 +13,11 @@ public enum ResultCodeEnum {
     private String message;
 
 
+    ResultCodeEnum(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     public Integer getCode() {
         return code;
     }
@@ -26,11 +31,6 @@ public enum ResultCodeEnum {
     }
 
     public void setMessage(String message) {
-        this.message = message;
-    }
-
-    ResultCodeEnum(Integer code, String message) {
-        this.code = code;
         this.message = message;
     }
 }
