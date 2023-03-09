@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 /**
  * @author Pecker
- * @Description 类信息
+ * @Description @Mapper(componentModel = "spring") 一定要加,和继承的子类加的@Mapper 不冲突
  * @since 2021-03-22
  */
 @MapperConfig(componentModel = "spring")

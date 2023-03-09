@@ -7,11 +7,12 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Pecker
- * @Description 所有标记@DoneTime 注解的类都会执行该切面
+ * @Description 所有标记@DoneTime 注解的类都会执行该切面.@Order 值越小,优先级越高.
  * @since 2020-04-23
  */
 @Aspect

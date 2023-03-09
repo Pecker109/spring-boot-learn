@@ -16,7 +16,7 @@
 package com.learn.sentinel.service;
 
 /**
- * @author Eric Zhao
+ * @author author
  */
 public interface DemoService {
 

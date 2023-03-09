@@ -26,8 +26,19 @@ public interface TransactionService {
      * insert3
      */
     void insert3();
+
     /**
      * insert4
      */
     void insert4();
+
+    /**
+     * insert5
+     */
+    void insert5();
+
+    /**
+     * 用来内部调用
+     */
+    void insertDo();
 }

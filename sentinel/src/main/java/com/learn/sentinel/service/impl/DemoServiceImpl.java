@@ -21,7 +21,7 @@ import com.learn.sentinel.service.ExceptionUtil;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Eric Zhao
+ * @author author
  */
 @Service
 public class DemoServiceImpl implements DemoService {

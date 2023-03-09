@@ -1,16 +1,17 @@
 package com.example.demo.mapStruct;
 
 import com.alibaba.fastjson.JSON;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
 /**
  * @author Pecker
- * @Description 类信息
+ * @Description @Mapper(componentModel = "spring") 一定要加,表示以 Spring 依赖注入的方式注入UserMapping实例
  * @since 2021-03-22
  */
-//@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface UserMapping extends BaseMapping<User, UserVO> {
     @Mapping(target = "gender", source = "sex")
     @Mapping(target = "createTime", dateFormat = "yyyy-MM-dd HH:mm:ss")

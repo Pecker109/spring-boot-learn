@@ -4,4 +4,4 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer {{accessToken}}
 
 ###
-GET {{mybatis-plus-api-url}}/tx/insert3
+GET {{mybatis-plus-api-url}}/tx/insert4Private

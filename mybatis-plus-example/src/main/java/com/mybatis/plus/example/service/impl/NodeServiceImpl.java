@@ -20,10 +20,10 @@ public class NodeServiceImpl implements NodeService {
     NodeMapper nodeMapper;
 
     @Override
-    @Transactional(rollbackFor = RuntimeException.class, propagation = Propagation.REQUIRES_NEW)
+    // @Transactional(rollbackFor = RuntimeException.class, propagation = Propagation.REQUIRES_NEW)
     public void insert() {
         nodeMapper.insert(EntityUtil.newNodeDO());
 
-        throw new RuntimeException();
+        //throw new RuntimeException();
     }
 }

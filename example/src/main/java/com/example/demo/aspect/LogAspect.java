@@ -3,6 +3,7 @@ package com.example.demo.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,13 +20,16 @@ import org.springframework.stereotype.Component;
  * </p>
  * @since 2020-04-23
  */
+@Order(1)
 @Aspect
 @Component
 public class LogAspect {
+    // 定义切入点 Pointcut
     @Pointcut("execution(public * com.example.demo.controller.*.*(..))")
     public void LogAspect() {
     }
 
+    // 定义 Advice,引用切入点
     @Before("LogAspect()")
     public void doBefore(JoinPoint joinPoint) {
         System.out.println("doBefore");

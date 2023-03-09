@@ -60,7 +60,7 @@ public class PropagationServiceImpl implements PropagationService {
          * 方式七: 外层事务 传播特性Propagation.REQUIRED
          * 内层事务第一个传播特性Propagation.REQUIRED,第二个传播特性Propagation.NEVER,第二个抛异常 ==> NEVER更吊,外层都不能有,有了就抛异常
          *
-         * REQUIRED 和 REQUIRES_NEW 比较: 外层不存在事务都是可以创建事务,当外层存在事务,REQUIRED 是使用外层事务,REQUIRES_NEW不随外层事务回滚二回滚,只有自己的逻辑异常才会回滚
+         * REQUIRED 和 REQUIRES_NEW 比较: 外层不存在事务都是可以创建事务,当外层存在事务,REQUIRED 是使用外层事务,REQUIRES_NEW不随外层事务回滚而回滚,只有自己的逻辑异常才会回滚
          */
 
         userService.insert();

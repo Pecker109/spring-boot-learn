@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -10,6 +11,7 @@ import java.util.Properties;
  * @Description 类信息
  * @since 2021-02-01
  */
+@Slf4j
 public class PropertiesTest {
 
 

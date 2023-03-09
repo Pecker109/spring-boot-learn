@@ -53,6 +53,7 @@ public class StreamTest {
      */
     static List<Student> filter() {
         List<Student> list = initList().stream()
+                // 返回的 stream 中元素是匹配 Predicate 的,即所有age<40的
                 .filter(stu -> stu.getAge() < 40)
                 .collect(Collectors.toList());
         out.println(list);

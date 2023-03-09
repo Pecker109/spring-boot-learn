@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 @TableName("course")
 public class Course {
-    private Long cid;
-    private String cname;
+    private Long id;
+    private String name;
     private Long userId;
-    private String cstatus;
+    private String status;
 }

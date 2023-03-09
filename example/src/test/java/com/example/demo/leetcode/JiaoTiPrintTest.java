@@ -28,17 +28,16 @@ public class JiaoTiPrintTest {
      */
 
     private static final int THREAD_COUNT = 3;
+    private static final int STOP_FLAG = 100;
     private static volatile int count = 0;
 
     public static void main(String[] args) throws InterruptedException {
+        // 创建信号量数组
         Semaphore[] semaphores = new Semaphore[THREAD_COUNT];
         for (int i = 0; i < THREAD_COUNT; i++) {
             semaphores[i] = new Semaphore(1);
 
             // 保证从 0 开始, 其他线程需要被阻塞住,所以要先占用着其他两个线程的信号量
-//            if (i != THREAD_COUNT -1) {
-//                semaphores[i].acquire();
-//            }
             if (i != 0) {
                 semaphores[i].acquire();
             }
@@ -47,7 +46,7 @@ public class JiaoTiPrintTest {
         for (int i = 0; i < THREAD_COUNT; i++) {
             final int index = i;
             new Thread(new Runnable() {
-                //final Semaphore preSemaphore = semaphores[index == 0 ? THREAD_COUNT - 1 : index - 1];
+                // 线程和信号量绑定
                 final Semaphore currSemaphore = semaphores[index];
                 final Semaphore nextSemaphore = semaphores[index == THREAD_COUNT - 1 ? 0 : index + 1];
 
@@ -57,14 +56,16 @@ public class JiaoTiPrintTest {
 
                     while (true) {
                         try {
+                            // 线程操作被阻塞在 acquire() 处,release() 之后才会往下执行
+                            // 这样做其实有个问题,第一次循环所有的线程都会被阻塞在这里,直到最后一个线程唤醒第一个线程,而不是线程一进来就执行输出逻辑
                             currSemaphore.acquire();
-                            //preSemaphore.acquire();
-                            if (count > 10 * THREAD_COUNT) return;
-                            System.out.println(threadName + count++);
+                            // 何时终止打印
+                            if (count > STOP_FLAG) return;
+                            System.out.println(threadName + count);
+                            count += 1;
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } finally {
-                            //currSemaphore.release();
                             nextSemaphore.release();
                         }
                     }

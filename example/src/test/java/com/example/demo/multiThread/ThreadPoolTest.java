@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author Pecker
@@ -20,6 +17,12 @@ public class ThreadPoolTest {
     @SneakyThrows
     public static void main(String[] args) {
 
+        test1();
+        //singlePoll();
+    }
+
+    @SneakyThrows
+    private static void test1() {
         ExecutorService pool = Executors.newCachedThreadPool();
 
         int total = 10;
@@ -30,6 +33,34 @@ public class ThreadPoolTest {
             begin = pool.submit(new ThreadPoolTest.SelectTask(begin, interval)).get();
             //System.out.println("begin...." + begin);
         } while (begin <= total);
+    }
+
+    /**
+     * 单线程线程池只有等当前线程的当前任务执行完之后才会执行下一个任务
+     */
+    private static void singlePoll() {
+        ThreadPoolExecutor singlePool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>(),
+                r -> new Thread(r, "single_poll"));
+
+        singlePool.execute(new TaskExecutor("A"));
+        singlePool.execute(new TaskExecutor("B"));
+    }
+
+    static class TaskExecutor extends Thread {
+        String name;
+
+        public TaskExecutor(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                System.out.println(name);
+            }
+        }
     }
 
     @SneakyThrows

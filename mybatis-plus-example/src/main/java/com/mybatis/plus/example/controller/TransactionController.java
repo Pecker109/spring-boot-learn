@@ -60,4 +60,10 @@ public class TransactionController {
     private void insertPrivate() {
         transactionService.insert4();
     }
+
+    @GetMapping("/insert5")
+    public String insert5() {
+        transactionService.insert5();
+        return "success";
+    }
 }

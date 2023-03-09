@@ -17,7 +17,7 @@ public class ProxyTest {
 
         /**
          *  JDK 动态代理和 CGLIB 动态代理对比:
-         * 1.JDK 动态代理只能只能代理实现了接口的类或者直接代理接口，而 CGLIB 可以代理未实现任何接口的类。 代理对象的父类是 Proxy
+         * 1.JDK 动态代理只能代理实现了接口的类或者直接代理接口，而 CGLIB 可以代理未实现任何接口的类。 代理对象的父类是 Proxy
          * 2.CGLIB 动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为 final 类型的类和方法。 生成一个代理对象的子类
          * 3.就二者的效率来说，大部分情况都是 JDK 动态代理更优秀，随着 JDK 版本的升级，这个优势更加明显。
          */
@@ -42,6 +42,10 @@ public class ProxyTest {
 
         IUserDao proxy = (IUserDao) new JDKProxyFactory(target).getProxyInstance();
         System.out.println("代理对象" + proxy.getClass());  //输出代理对象信息
+        // JDK 动态代理被代理的父类一定是 java.lang.reflect.Proxy ,
+        // 所以这就是为啥 JDK 动态代理不能直接代理类,因为Java 中是类是单继承的,JDK 不知道你这个类是否已经继承过一个类了,而被 JDK 动态代理的类的父类必然是 java.lang.reflect.Proxy
+        // 所以说 JDK 动态代理只能是基于接口的
+        System.out.println("被代理类的父类:" + proxy.getClass().getSuperclass().getName());
         proxy.save();
     }
 
@@ -55,7 +59,7 @@ public class ProxyTest {
      * 2.通过生成类字节码实现代理，比反射稍快，不存在性能问题，
      * 3.实现 MethodInterceptor,重写 intercept() 方法
      * <p>
-     * Spring AOP 所生成的 AOP 代理就是使用的 CGLib 动态代理
+     * SpringBoot 默认使用 CGLib 动态代理,Spring 默认使用的还是 JDK 动态代理。
      */
     static void cglibProxyTest() {
         //目标对象
@@ -63,7 +67,9 @@ public class ProxyTest {
         System.out.println(target.getClass());
         //代理对象
         UserDao proxy = (UserDao) new CglibProxyFactory(target).getProxyInstance();
-        System.out.println(proxy.getClass());
+        System.out.println("代理对象" + proxy.getClass());  //输出代理对象信息
+        // CGLib 动态代理生成的代理类(proxy.getClass())的父类一定是被代理类(UserDao),所以 final 方法是不能被代理的
+        System.out.println("被代理类的父类:" + proxy.getClass().getSuperclass().getName());
         //执行代理对象方法
         proxy.save();
     }

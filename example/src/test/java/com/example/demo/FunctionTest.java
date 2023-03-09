@@ -24,7 +24,7 @@ public class FunctionTest {
 
     public static void main(String[] args) {
         //functionApplyTest();
-        //functionComposeTest();
+        functionComposeTest();
         //consumerAccept();
         //predicateTest1();
         //predicateTest2();
