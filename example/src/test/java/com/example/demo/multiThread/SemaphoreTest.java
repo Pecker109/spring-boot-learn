@@ -1,5 +1,7 @@
 package com.example.demo.multiThread;
 
+import lombok.SneakyThrows;
+
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -33,14 +35,27 @@ public class SemaphoreTest {
     }
 
     public static void main(String[] args) {
+        test1();
+        //for (int i = 0; i < 100; i++) {
+        //    int finalI = i;
+        //    new Thread(() -> {
+        //        System.out.println("i = " + finalI);
+        //        exec(finalI);
+        //    }).start();
+        //
+        //}
+    }
 
-        for (int i = 0; i < 100; i++) {
-            int finalI = i;
-            new Thread(() -> {
-                System.out.println("i = " + finalI);
-                exec(finalI);
-            }).start();
+    @SneakyThrows
+    public static void test1() {
+        //Semaphore semaphore1 = new Semaphore(0);
+        //semaphore1.release(1);
+        //semaphore1.acquire(1);
+        //System.out.println("done...");
 
-        }
+        Semaphore semaphore1 = new Semaphore(0);
+        //semaphore1.release(1);
+        semaphore1.acquire(1);
+        System.out.println("done...");
     }
 }

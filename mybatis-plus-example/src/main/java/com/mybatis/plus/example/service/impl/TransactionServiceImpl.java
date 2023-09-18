@@ -30,6 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
     UserMapper userMapper;
 
     @Override
+    @Transactional
     public void select1() {
         System.out.println(("----- selectAll method test ------"));
         PageHelper.startPage(1, 10);

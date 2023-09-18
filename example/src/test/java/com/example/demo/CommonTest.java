@@ -1,8 +1,10 @@
 package com.example.demo;
 
+import cn.hutool.core.util.StrUtil;
+import com.example.demo.model.Student;
 import org.apache.commons.lang3.StringUtils;
 
-import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 /**
  * idea 破解方式连接:https://www.exception.site/essay/how-to-free-use-intellij-idea-2019-3
@@ -15,14 +17,16 @@ import java.nio.charset.StandardCharsets;
  */
 public class CommonTest {
 
-
     public static void main(String[] args) throws Exception {
-        String a ="\u003C \u003E";
-        String b = "\u003c";
-        System.out.println(new String(b.getBytes(), StandardCharsets.UTF_8));
+        Student student =new Student();
+        student.setAge(15);
+        student.setName("令狐冲");
+        String apply = buildKey().apply(student);
+        System.out.println(apply);
+    }
 
-
-
+    public static Function<Student, String> buildKey() {
+        return (Student obj) -> StringUtils.joinWith(StrUtil.AT, obj.getAge(), obj.getName());
     }
 
 }

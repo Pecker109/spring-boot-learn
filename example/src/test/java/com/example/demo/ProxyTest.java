@@ -3,7 +3,9 @@ package com.example.demo;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
+import sun.misc.ProxyGenerator;
 
+import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -23,9 +25,9 @@ public class ProxyTest {
          */
 
         // JDK 动态代理
-        jdkProxyTest();
+        // jdkProxyTest();
 
-        //CGLib 动态代理
+        // CGLib 动态代理
         cglibProxyTest();
     }
 
@@ -47,6 +49,24 @@ public class ProxyTest {
         // 所以说 JDK 动态代理只能是基于接口的
         System.out.println("被代理类的父类:" + proxy.getClass().getSuperclass().getName());
         proxy.save();
+
+        // 获取内存中字节码文件,写到磁盘上
+        String path = "/Users/apple/Documents/project/spring-boot-learn/UserDaoJDK.class";
+        outClassFile("$Proxy0", path);
+
+    }
+
+    private static void outClassFile(String className, String path) {
+
+        // JDK的动态代理，它产生的代理对象是在运行时创建.打印出动态代理类$Proxy0
+        byte[] classFile = ProxyGenerator.generateProxyClass(className, UserDao.class.getInterfaces());
+        try (FileOutputStream fos = new FileOutputStream(path)) {
+            fos.write(classFile);
+            fos.flush();
+            System.out.println("代理类class文件写入成功");
+        } catch (Exception e) {
+            System.out.println("写文件错误");
+        }
     }
 
     /**
@@ -67,11 +87,13 @@ public class ProxyTest {
         System.out.println(target.getClass());
         //代理对象
         UserDao proxy = (UserDao) new CglibProxyFactory(target).getProxyInstance();
-        System.out.println("代理对象" + proxy.getClass());  //输出代理对象信息
+        System.out.println("代理对象" + proxy.getClass().getName());  //输出代理对象信息
         // CGLib 动态代理生成的代理类(proxy.getClass())的父类一定是被代理类(UserDao),所以 final 方法是不能被代理的
         System.out.println("被代理类的父类:" + proxy.getClass().getSuperclass().getName());
         //执行代理对象方法
         proxy.save();
+
+        // cglib 产生的动态代理对象可以通过 arthas 的 jad 查看
     }
 
 
@@ -83,7 +105,6 @@ public class ProxyTest {
     }
 
     public static class UserDao implements IUserDao {
-
         @Override
         public void save() {
             System.out.println("保存数据");
@@ -101,8 +122,12 @@ public class ProxyTest {
 
         // 为目标对象生成代理对象
         public Object getProxyInstance() {
-            /**
+            /*
              * 调用 Proxy#newProxyInstance() 生成代理对象
+             * Proxy.ProxyClassFactory#apply():
+             *  1.生成代理对象名称$Proxy+num
+             *  2.生成字节码数据:proxyClassFile
+             *  3.从字节码生成 Class 对象:defineClass0()
              */
             return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(),
                     //关键点: 实现 InvocationHandler 接口,InvocationHandler 就是代理类
@@ -116,6 +141,7 @@ public class ProxyTest {
                         return null;
                     });
         }
+
     }
 
     public static class CglibProxyFactory implements MethodInterceptor {

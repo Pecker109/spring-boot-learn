@@ -15,7 +15,7 @@ public class DaemonThread {
         Thread thread = new Thread(task);
         // thread.setDaemon(true) 守护线程,程序结束,线程也立马结束运行
         // thread.setDaemon(false) 非守护线程,即使程序要结束,非守护线程尚未结束,要等到该线程结束之后,程序才会结束
-        thread.setDaemon(true);
+        thread.setDaemon(false);
         thread.start();
     }
 

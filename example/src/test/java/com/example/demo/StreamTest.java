@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.model.Student;
+import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +29,8 @@ import static java.lang.System.out;
 public class StreamTest {
 
     public static void main(String[] args) {
-        match();
+        //match();
+        mapping();
     }
 
     /**
@@ -39,6 +41,7 @@ public class StreamTest {
     static List<Student> initList() {
         List<Student> studentList = Stream.of(
                 new Student("路飞", 22),
+                new Student("路飞", 20),
                 new Student("路飞", 20),
                 new Student("红发", 40),
                 new Student("白胡子", 50)).collect(Collectors.toList());
@@ -254,6 +257,11 @@ public class StreamTest {
                 .map(Student::getName)
                 .collect(Collectors.toList());
         out.println(list);
+
+        Map<Pair<Integer, String>, Student> map = initList().stream()
+                //.collect(Collectors.toMap(obj -> new Pair<>(obj.getAge(), obj.getAge()), obj -> obj));
+                .collect(Collectors.toMap(i -> new Pair<>(i.getAge(), i.getName()), i -> i));
+        out.println(map);
     }
 
     /**
