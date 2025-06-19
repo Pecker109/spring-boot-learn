@@ -6,7 +6,7 @@ package com.example.demo;
  * @since 2020-12-29
  */
 public class GCTest {
-    //添加运行JVM参数： -XX:+PrintGCDetails
+    //添加运行JVM参数：-XX:+PrintGC -XX:+PrintGCDetails
     public static void main(String[] args) throws InterruptedException {
         byte[] allocation1, allocation2/*, allocation3, allocation4, allocation5, allocation6*/;
         allocation1 = new byte[60000 * 1024];

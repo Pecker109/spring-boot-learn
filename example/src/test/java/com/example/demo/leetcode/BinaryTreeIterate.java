@@ -24,7 +24,7 @@ public class BinaryTreeIterate {
         TreeNode node3 = new TreeNode(3, null, null);
         TreeNode node2 = new TreeNode(2, node4, node5);
         TreeNode root = new TreeNode(1, node2, node3);
-        recursion(root);
+        dfs(root);
         levelIterate(root);
         preIterate(root);
         midIterate(root);
@@ -32,6 +32,8 @@ public class BinaryTreeIterate {
 
 
     /**
+     * 深度优先遍历
+     * Depth-First Search
      * 递归
      * 前序遍历:根左右
      * 中序遍历:左根右
@@ -39,15 +41,15 @@ public class BinaryTreeIterate {
      *
      * @param root 根节点
      */
-    private static void recursion(TreeNode root) {
+    private static void dfs(TreeNode root) {
         if (null == root) {
             return;
         }
         // 前序遍历,第一次成为栈顶即打印:System.out.println(root.value);
         System.out.println(root.value);
-        recursion(root.left);
+        dfs(root.left);
         // 中序遍历,第二次成为栈顶即打印:System.out.println(root.value);
-        recursion(root.right);
+        dfs(root.right);
         // 后序遍历,第三次成为栈顶即打印:System.out.println(root.value);
     }
 
@@ -63,9 +65,10 @@ public class BinaryTreeIterate {
     }
 
     /**
-     * 层序遍历.
-     * 很重要:根节点的数组下标为 1,(若当前节点下标为n)其左节点下标为 2n,右节点为 2n+1
-     * 从上到下,从左往右,每个节点都对应一个数组下标,数组下标是 1,2,3,4...,没有子节点的可以看成左右节点都为 null
+     * 广度优先遍历-层序遍历.
+     * 很重要:广度优先一定得知道当前层级,即数组下标
+     * 1.根节点的层级(数组下标)为 1,(若当前节点下标为n)其左节点下标为 2n,右节点为 2n+1
+     * 2.从上到下,从左往右,每个节点都对应一个数组下标,数组下标是 1,2,3,4...,没有子节点的可以看成左右节点都为 null
      * 假设当前节点的数组下标为n,在本次方法调用中当前节点的下标是入参传进来的是确定的n.例如从根节点开始,根节点的数组下标是 1,
      * 所以当前节点的左节点就为 2n,当前节点的右节点就为 2n+1
      * 把所有节点的下标放入list 对应的下标处,最终遍历list
@@ -93,6 +96,7 @@ public class BinaryTreeIterate {
     }
 
     /**
+     * 深度优先-栈实现
      * 迭代算法,用额外的数据结构，来模拟递归栈
      * 前序遍历:根左右
      * 利用栈先进后出的特性,先让根节点入栈,通过遍历这个栈来达到迭代遍历的目的
@@ -106,7 +110,7 @@ public class BinaryTreeIterate {
             // 遍历这个栈来迭代遍历
             Stack<TreeNode> stack = new Stack<>();
             // 根节点入栈
-            stack.add(root);
+            stack.push(root);
             while (!stack.isEmpty()) {
                 // 取出栈顶元素,栈顶元素就是小范围内的根节点了
                 root = stack.pop();

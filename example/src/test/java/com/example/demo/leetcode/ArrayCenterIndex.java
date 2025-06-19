@@ -27,7 +27,7 @@ public class ArrayCenterIndex {
             }
             // 搞不清什么临界值找一个简单的示例比如:[7,2,4,3]
             // 所以说计算 total == sum 时是都包含 num[i] 的节点的,不相等才会 sum - nums[i]
-            sum = sum - nums[i];
+            sum -= nums[i];
         }
         // [(1,7,3),6,(5,6)]
         return -1;

@@ -12,6 +12,7 @@ import java.net.URL;
 public class ClassLoaderTest {
 
     public static void main(String[] args) {
+        // String 类位于 rt.jar 目录下,属于引导类类加载器,由 JVM 的 C++代码实现,所以这里打印为空
         System.out.println(String.class.getClassLoader());
         System.out.println(com.sun.crypto.provider.DESKeyFactory.class.getClassLoader().getClass().getName());
         System.out.println(CommonTest.class.getClassLoader().getClass().getName());

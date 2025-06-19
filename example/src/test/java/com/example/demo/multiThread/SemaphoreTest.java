@@ -35,15 +35,15 @@ public class SemaphoreTest {
     }
 
     public static void main(String[] args) {
-        test1();
-        //for (int i = 0; i < 100; i++) {
-        //    int finalI = i;
-        //    new Thread(() -> {
-        //        System.out.println("i = " + finalI);
-        //        exec(finalI);
-        //    }).start();
-        //
-        //}
+        //test1();
+        for (int i = 0; i < 100; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                System.out.println("i = " + finalI);
+                exec(finalI);
+            }).start();
+
+        }
     }
 
     @SneakyThrows

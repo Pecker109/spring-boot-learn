@@ -22,12 +22,18 @@ public class ProxyTest {
          * 1.JDK 动态代理只能代理实现了接口的类或者直接代理接口，而 CGLIB 可以代理未实现任何接口的类。 代理对象的父类是 Proxy
          * 2.CGLIB 动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为 final 类型的类和方法。 生成一个代理对象的子类
          * 3.就二者的效率来说，大部分情况都是 JDK 动态代理更优秀，随着 JDK 版本的升级，这个优势更加明显。
+         *
+         * 可以通过idea配置vm 的方式将动态代理产生的类生成到指定目录.下面的示例中也将生成的代理类通过字节码的方式生成了出来.
          */
 
         // JDK 动态代理
-        // jdkProxyTest();
+        jdkProxyTest();
 
-        // CGLib 动态代理
+        /*
+         CGLib 动态代理:
+         1.先缓存代理类
+         2.再创建代理对象
+         */
         cglibProxyTest();
     }
 
@@ -37,6 +43,9 @@ public class ProxyTest {
          * 1.父类必然是 Proxy ,这也为什么说对于没有实现接口的类无法被 JDK 动态代理
          * 2.必须实现 InvocationHandler 接口
          * 3.通过反射代理方法，比较消耗系统性能，但可以减少代理类的数量，使用更灵活
+         * 4.JDK 动态代理只能代理接口中定义的方法，与目标类的 final 方法无关
+         * -- 接口中定义方法为final,这种场景语法上不支持
+         * -- 接口的目标实现类上定义为 final,JDK 方式可以进行动态代理,但是一般不会这么去写,没什么意义
          */
         // 调用过程 : Proxy --> InvocationHandler --> 目标对象方法
         IUserDao target = new UserDao();
@@ -51,7 +60,7 @@ public class ProxyTest {
         proxy.save();
 
         // 获取内存中字节码文件,写到磁盘上
-        String path = "/Users/apple/Documents/project/spring-boot-learn/UserDaoJDK.class";
+        String path = "/Users/apple/Documents/project/spring-boot-learn/UserDaoJDK-final.class";
         outClassFile("$Proxy0", path);
 
     }
@@ -106,7 +115,7 @@ public class ProxyTest {
 
     public static class UserDao implements IUserDao {
         @Override
-        public void save() {
+        public final void save() {
             System.out.println("保存数据");
         }
     }

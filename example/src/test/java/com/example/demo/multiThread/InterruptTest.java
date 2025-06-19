@@ -6,7 +6,25 @@ package com.example.demo.multiThread;
  * @since 2021-04-22
  */
 public class InterruptTest {
-
+    /**
+     * 作用1:
+     * Thread.interrupt() 是 Java 中用于中断线程的方法。
+     * 它通过设置线程的中断状态（interrupt status）来通知线程应该停止当前的操作。
+     * 需要注意的是，interrupt() 方法并不会直接终止线程，而是通过设置中断状态，让线程自行决定如何处理中断。
+     * 作用 2:
+     * 唤醒阻塞的线程：
+     * 如果线程因为调用 Object.wait()、Thread.join() 或 Thread.sleep() 等方法而处于阻塞状态，
+     * interrupt() 会抛出 InterruptedException，并清除中断状态。
+     * 如果需要保留中断状态，需要在捕获异常后重新设置中断状态:重新调用 interrupt()
+     * 3.中断状态检查:
+     * 可以通过 Thread.interrupted() 或 Thread.isInterrupted() 检查中断状态。
+     * Thread.interrupted() 会清除中断状态，而 Thread.isInterrupted() 不会
+     * 4.中断处理的两种方式:
+     * a.针对于程序中调用了 sleep(),wait() 等方法的中断处理是会抛出异常 InterruptedException,但是要注意的是抛出InterruptedException 异常之后 中断状态会被清除掉
+     * b.另外一种中断处理方式是通过程序中手动判断 isInterrupted() 去处理
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         //test1();
         //test2();
@@ -58,18 +76,19 @@ public class InterruptTest {
         Thread thread = new Thread(() -> {
             while (true) {
                 Thread.yield();
-                //响应中断,然后返回
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("当前线程被中断...");
-                    return;
-                }
-
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     System.out.println("线程中断,程序退出");
                 }
 
+                //响应中断,然后返回
+                if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("当前线程被中断...");
+                    return;
+                } else {
+                    System.out.println("中断清除,继续执行");
+                }
             }
         });
 

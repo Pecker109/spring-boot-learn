@@ -8,8 +8,12 @@ import com.mybatis.plus.example.service.NodeService;
 import com.mybatis.plus.example.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 
@@ -134,5 +138,24 @@ public class TransactionServiceImpl implements TransactionService {
 
     private void throwException() {
         throw new RuntimeException("");
+    }
+
+    @Autowired
+    TransactionTemplate transactionTemplate;
+
+    @Override
+    public void manualTxInsert1() {
+        /*
+            TransactionTemplate 编程式事务内部也是调用TransactionManager 进行事务的提交和回滚
+            execute()和executeWithoutResult()方法内部实现逻辑是一模一样的,只是execute() 是有返回值的方式进行数据库操作
+            什么时候回滚:内部抛出任意异常即可回滚
+            什么时候提交:方法没有异常 && 未调用过transactionStatus.setRollbackOnly()
+         */
+        transactionTemplate.execute(transactionStatus -> {
+            nodeService.insert();
+            // 验证抛出异常事务回滚,不抛异常事务正常提交
+            throwException();
+            return null;
+        });
     }
 }

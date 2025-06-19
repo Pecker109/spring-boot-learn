@@ -29,17 +29,39 @@ public class ChampagneTower {
         // 执行完这个双重 for 循环之后所有的容量就都已经分配过了
         for (int i = 0; i < x; i++) {
             for (int j = 0; j <= i; j++) {
-                //生层分配过来的流量减去本身需要的 1
-                double remain = (ca[i][j] - 1) / 2;
+                //上层分配过来的流量减去本身需要的 1
+                double remain = ca[i][j] - 1;
                 // 剩余的大于 0 才会往下分配
                 if (remain > 0) {
                     // 本题的关键在于找出题目中给出的规律:
                     // 1.上层的会把减去本身需要的 1,平均分配给下一行的[i+1][j]和[i+1][j+1]
-                    ca[i + 1][j] += remain;
-                    ca[i + 1][j + 1] += remain;
+                    ca[i + 1][j] += remain / 2;
+                    ca[i + 1][j + 1] += remain / 2;
                 }
             }
         }
         return Math.min(1, ca[x][y]);
+    }
+
+
+    private static double indexCa1(int n, int x, int y) {
+
+        x--;
+        y--;
+
+        double[][] tower = new double[10][10];
+        tower[0][0] = n;
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                double remain = tower[i][j] - 1;
+                if (remain > 0) {
+                    tower[i + 1][j] = remain / 2;
+                    tower[i + 1][j + 1] = remain / 2;
+                }
+            }
+        }
+
+        return Math.min(1, tower[x][y]);
     }
 }

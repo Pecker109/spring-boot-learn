@@ -10,11 +10,11 @@ import java.util.Set;
 public class LinkCycle {
 
     public static void main(String[] args) {
-        ListNode node5 = new ListNode(5, null);
-        ListNode node4 = new ListNode(4, node5);
-        ListNode node3 = new ListNode(3, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
+        ListNode node5 = new ListNode("5", null);
+        ListNode node4 = new ListNode("4", node5);
+        ListNode node3 = new ListNode("3", node4);
+        ListNode node2 = new ListNode("2", node3);
+        ListNode node1 = new ListNode("1", node2);
         //node5.next = node3;
 
         System.out.println(hasCycleBySet(node1));
@@ -29,7 +29,7 @@ public class LinkCycle {
      * @return true-有环
      */
     private static boolean hasCycleBySet(ListNode head) {
-        Set<Integer> set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         while (null != head) {
             // set添加失败说明有元素了
             if (!set.add(head.value)) {
@@ -62,6 +62,23 @@ public class LinkCycle {
             }
             slow = slow.next;
             // 为了加速 fast 指针指向尾节点
+            fast = fast.next.next;
+        }
+        return true;
+    }
+
+
+    private static boolean hasCycleByTwoPoint1(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
             fast = fast.next.next;
         }
         return true;

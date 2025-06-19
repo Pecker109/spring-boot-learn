@@ -41,4 +41,9 @@ public interface TransactionService {
      * 用来内部调用
      */
     void insertDo();
+
+    /**
+     * 编程式事务
+     */
+    void manualTxInsert1();
 }

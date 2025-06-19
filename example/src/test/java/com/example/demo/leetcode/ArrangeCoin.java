@@ -18,15 +18,15 @@ public class ArrangeCoin {
      * @return return
      */
     private static int cal1(int n) {
-        int x = 0, total = 0;
+        int level = 0, total = 0;
         while (total < n) {
-            x++;
-            total += x;
+            level++;
+            total += level;
             if (total > n) {
-                x--;
+                level--;
             }
         }
-        return x;
+        return level;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.example.demo.multiThread;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,6 +12,79 @@ import lombok.extern.slf4j.Slf4j;
 public class JoinTest {
 
     public static void main(String[] args) {
+        //test1();
+        //test2();
+        test3();
+    }
+
+    /**
+     * 这个方法可以证明子线程会被先执行,主线程会被阻塞,
+     * 可以把join理解成一个普通方法！真正阻塞的不是调用者线程，而是当前正在执行的线程。
+     */
+    public static void test1() {
+        Thread t1 = new Thread(() -> {
+            System.out.println("子线程开始执行");
+            try {
+                Thread.sleep(2000); // 模拟耗时操作
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("子线程执行完毕");
+        });
+
+        t1.start(); // 启动子线程
+
+        try {
+            System.out.println("主线程等待子线程完成");
+            /*
+             看代码是 t1.join,好像是t1 线程在调用 join()方法,
+             其实是主线程正在执行这里的代码逻辑,t1 只是个对象,当前的线程持有者是主线程
+             join() 方法内部调用wait()方法进行阻塞当前线程,当前线程就是主线程,
+             这也不难理解为什么主线程会被阻塞,t1 线程会执行了
+             */
+            t1.join(); // 主线程等待子线程完成
+            System.out.println("主线程继续执行");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void test2() {
+        Thread thread1 = new Thread(() -> {
+            System.out.println("子线程1开始执行");
+            try {
+                Thread.sleep(2000); // 模拟耗时操作
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("子线程1执行完毕");
+        });
+
+        Thread thread2 = new Thread(() -> {
+            System.out.println("子线程2开始执行");
+            try {
+                Thread.sleep(2000); // 模拟耗时操作
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("子线程2执行完毕");
+        });
+
+        thread1.start(); // 启动子线程
+        thread2.start(); // 启动子线程
+
+        try {
+            System.out.println("主线程等待子线程完成");
+            thread1.join(); // 主线程等待子线程完成
+            thread2.join(); // 主线程等待子线程完成
+            System.out.println("主线程继续执行");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SneakyThrows
+    public static void test3() {
         // 初始化前置线程为主线程
         Thread preThread = Thread.currentThread();
         for (int i = 0; i < 10; i++) {
@@ -19,7 +93,8 @@ public class JoinTest {
             preThread = joinDemo;
         }
 
-        System.out.println("主线程执行结束...");
+        Thread.sleep(5000);
+        log.info("主线程执行结束...");
     }
 
     public static class JoinDemo extends Thread {
@@ -37,6 +112,7 @@ public class JoinTest {
                 //调用上一个线程的join方法，演示的时候可以把这行代码注释掉
                 /* join(long millis) 方法为: 当前线程会被挂起,去先执行preThread 线程的 run()方法,
                  * 参数millis 表示会等待preThread 多久, 0 表示会一直等待preThread 线层执行结束
+                 * 可以理解为现成插队方法,谁调谁插队,示例中是preThread 调用,那就是preThread 先执行
                  *
                  * 实现原理:
                  * 1.当前线程是如何被挂起的:
@@ -52,7 +128,9 @@ public class JoinTest {
                  *   第一个是设置native线程对象为null、
                  *   第二个是通过notifyall方法，让等待在previousThread对象锁上的wait方法被唤醒。
                  */
-                log.info("当前线程: {} , i = {}", currentThread(), i);
+                log.info("前置线程={},当前线程={},num={}", preThread.getName(), currentThread().getName(), i);
+                // 当前调用线程会被阻塞,底层会调用 wait 等待,直到 preThread 现成执行完后,会调用 notify 通知当前线程
+                // preThread 现成会去执行,执行完后底层会调用 notify 唤醒当前线程
                 preThread.join();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -60,23 +138,5 @@ public class JoinTest {
             log.info("num:" + i);
         }
     }
-
-
-    // 这个方法可以证明 threadA 会被先执行,主线程会被阻塞,可以把join理解成一个普通方法！真正阻塞的不是调用者线程，而是当前正在执行的线程。
-    //public static void main(String[] args) throws InterruptedException {
-    //    Thread threadA = new Thread(()->{
-    //        try {
-    //            TimeUnit.SECONDS.sleep(2);
-    //        } catch (InterruptedException e) {
-    //            e.printStackTrace();
-    //        }
-    //        System.out.println(Thread.currentThread().getName()+":想先执行");
-    //    },"线程A");
-    //    //开启一个线程A
-    //    threadA.start();
-    //    //主线程会持有子线程的锁,子线程还没开始主线程就阻塞了,等待子线程结束后通知;
-    //    threadA.join();
-    //    System.out.println(Thread.currentThread().getName()+ "线程执行");
-    //}
 
 }

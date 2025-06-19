@@ -37,7 +37,7 @@ public class BalancedBinaryTree {
     }
 
     /**
-     * 求层高
+     * 求层高,递归次数就是层高
      *
      * @param root 求传入节点 root 的层高
      * @return 层高

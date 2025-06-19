@@ -8,11 +8,11 @@ package com.example.demo.leetcode;
 public class CanWin {
     public static void main(String[] args) {
         // nums 元素个数为偶数一定存在,为奇数要看数组的内容了
-        // int[] nums = new int[]{1, 100, 3, 4, 5}; // false
-        int[] nums = new int[]{1, 100, 3, 4}; // true
+         int[] nums = new int[]{1, 100, 3, 4, 5}; // false
+        //int[] nums = new int[]{1, 100, 3, 4}; // true
         System.out.println(canWin(nums));
         // 差值大于 0 说明有必赢策略
-        System.out.println(maxDiff(nums, 0, nums.length - 1) > 0);
+        //System.out.println(maxDiff(nums, 0, nums.length - 1) > 0);
     }
 
     private static boolean canWin(int[] nums) {
@@ -62,9 +62,9 @@ public class CanWin {
             // maxScore(nums, l + 2, r) 表示:另外一个人拿的 l+1 位置的值,那么剩余的从 l+2 到 r 中最大的数据
             // maxScore(nums, l + 1, r - 1)表示:另外一个人拿的 r 位置的值,那么剩余的从 l+1 到 r-1中最大的数据
             // Math.min 表示:另外一个人一定会从剩余情况中拿最大值,那么当前这个人一定就是另外一种较小的情况了
-            sLight = nums[l] + Math.min(maxScore(nums, l + 2, r), maxScore(nums, l + 1, r - 1));
+            sLight = nums[l] + Math.max(maxScore(nums, l + 2, r), maxScore(nums, l + 1, r - 1));
             // 右侧数据同理
-            sRight = nums[r] + Math.min(maxScore(nums, l + 1, r - 1), maxScore(nums, l, r - 2));
+            sRight = nums[r] + Math.max(maxScore(nums, l + 1, r - 1), maxScore(nums, l, r - 2));
 
             // 可以看到 maxScore(nums, l + 1, r - 1) 遍历了两次,因此可以省略一次
         }

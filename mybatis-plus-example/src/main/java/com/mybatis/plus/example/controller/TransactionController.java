@@ -66,4 +66,10 @@ public class TransactionController {
         transactionService.insert5();
         return "success";
     }
+
+    @GetMapping("/manual1")
+    public String manual1() {
+        transactionService.manualTxInsert1();
+        return "success";
+    }
 }

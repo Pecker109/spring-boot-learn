@@ -33,6 +33,9 @@
         <module>sentinel</module>
         <module>nacos</module>
         <module>spring-security</module>
+        <module>Disruptor-example</module>
+		<module>Disruptor-example/basic-event</module>
+        <module>Disruptor-example/common</module>
     </modules>
 
 	<dependencyManagement>

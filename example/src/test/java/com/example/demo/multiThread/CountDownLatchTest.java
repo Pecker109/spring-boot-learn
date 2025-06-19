@@ -24,8 +24,8 @@ public class CountDownLatchTest {
      * CountDownLatch 是计数器，只能使用一次，而 CyclicBarrier 的计数器提供 reset 功能，可以多次使用
      */
     public static void main(String[] args) throws InterruptedException {
-       //test1();
-       test2();
+       test1();
+       //test2();
     }
 
 

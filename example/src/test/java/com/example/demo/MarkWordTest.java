@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.model.Student;
 import org.openjdk.jol.info.ClassLayout;
 
 /**
@@ -9,6 +10,10 @@ import org.openjdk.jol.info.ClassLayout;
  */
 public class MarkWordTest {
     public static void main(String[] args) {
-        System.out.println(ClassLayout.parseInstance(String.class));
+        System.out.println(ClassLayout.parseInstance(String.class).toPrintable());
+        System.out.println();
+        System.out.println(ClassLayout.parseInstance(new int[]{}).toPrintable());
+        System.out.println();
+        System.out.println(ClassLayout.parseInstance(new Student()).toPrintable());
     }
 }
