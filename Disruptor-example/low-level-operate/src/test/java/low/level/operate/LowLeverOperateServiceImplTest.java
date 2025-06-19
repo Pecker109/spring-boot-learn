@@ -21,6 +21,13 @@ public class LowLeverOperateServiceImplTest {
     @Qualifier("oneConsumer")
     LowLevelOperateService oneConsumer;
 
+    @Autowired
+    @Qualifier("multiConsumer")
+    LowLevelOperateService multiConsumer;
+
+    @Autowired
+    @Qualifier("workerPoolConsumer")
+    LowLevelOperateService workerPoolConsumer;
     private static final int EVENT_COUNT = 100;
 
     @Test
@@ -36,6 +43,18 @@ public class LowLeverOperateServiceImplTest {
          */
         log.info("start testOneConsumerService");
         testLowLevelOperateService(oneConsumer);
+    }
+
+    @Test
+    public void testMultiConsumer() throws InterruptedException {
+        log.info("start testMultiConsumer");
+        testLowLevelOperateService(multiConsumer);
+    }
+
+    @Test
+    public void testWorkerPoolConsumer() throws InterruptedException {
+        log.info("start testWorkerPoolConsumer");
+        testLowLevelOperateService(workerPoolConsumer);
     }
 
     private void testLowLevelOperateService(LowLevelOperateService service) throws InterruptedException {

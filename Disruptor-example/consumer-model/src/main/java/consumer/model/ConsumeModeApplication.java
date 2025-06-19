@@ -1,16 +1,15 @@
-package basic.event.service;
+package consumer.model;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Pecker
- * @since 2025/6/10 16:35
+ * @since 2025/6/19 15:40
  */
 @SpringBootApplication
-public class BasicEventApplication {
+public class ConsumeModeApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BasicEventApplication.class, args);
+        SpringApplication.run(ConsumeModeApplication.class, args);
     }
-
 }

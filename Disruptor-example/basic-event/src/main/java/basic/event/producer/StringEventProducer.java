@@ -1,4 +1,4 @@
-package basic.event.service.producer;
+package basic.event.producer;
 
 import com.lmax.disruptor.dsl.Disruptor;
 import common.event.StringEvent;

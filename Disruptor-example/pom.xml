@@ -11,6 +11,9 @@
     </parent>
 
     <packaging>pom</packaging>
+    <modules>
+        <module>consumer-model</module>
+    </modules>
 
     <artifactId>disruptor-example</artifactId>
     <version>0.0.1-SNAPSHOT</version>

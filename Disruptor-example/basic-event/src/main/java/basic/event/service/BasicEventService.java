@@ -1,6 +1,6 @@
-package basic.event.service.service;
+package basic.event.service;
 
-import basic.event.service.producer.StringEventProducer;
+import basic.event.producer.StringEventProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

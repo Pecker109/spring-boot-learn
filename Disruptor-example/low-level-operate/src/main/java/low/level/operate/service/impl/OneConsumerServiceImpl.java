@@ -1,5 +1,7 @@
 package low.level.operate.service.impl;
 
+import com.lmax.disruptor.RingBuffer;
+import common.event.StringEvent;
 import lombok.extern.slf4j.Slf4j;
 import low.level.operate.producer.ProducerWithRingBuffer;
 import low.level.operate.service.LowLevelOperateService;
@@ -17,8 +19,11 @@ public class OneConsumerServiceImpl implements LowLevelOperateService {
     @Autowired
     ProducerWithRingBuffer stringEventProducer;
 
+    @Autowired
+    RingBuffer<StringEvent> oneConsumerRingBuffer;
+
     @Override
     public void publish(String value) {
-        stringEventProducer.onData(value);
+        stringEventProducer.onData(oneConsumerRingBuffer,value);
     }
 }

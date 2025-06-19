@@ -1,6 +1,6 @@
-package basic.event.service.controller;
+package basic.event.controller;
 
-import basic.event.service.service.BasicEventService;
+import basic.event.service.BasicEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

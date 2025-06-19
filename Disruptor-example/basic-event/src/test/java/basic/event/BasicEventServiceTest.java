@@ -1,6 +1,6 @@
-package basic.event.service;
+package basic.event;
 
-import basic.event.service.service.BasicEventService;
+import basic.event.service.BasicEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

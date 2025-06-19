@@ -1,4 +1,4 @@
-package basic.event.service.config;
+package basic.event.config;
 
 
 import com.lmax.disruptor.dsl.Disruptor;

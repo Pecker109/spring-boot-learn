@@ -3,7 +3,6 @@ package low.level.operate.producer;
 import com.lmax.disruptor.RingBuffer;
 import common.event.StringEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,11 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProducerWithRingBuffer {
 
-    @Autowired
-    RingBuffer<StringEvent> ringBuffer;
-
-
-    public void onData(String content) {
+    public void onData(RingBuffer<StringEvent> ringBuffer, String content) {
         // ringBuffer是个队列，其next方法返回的是下最后一条记录之后的位置，这是个可用位置
         long sequence = ringBuffer.next();
 
