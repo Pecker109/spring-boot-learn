@@ -1,8 +1,6 @@
 package com.mybatis.plus.example.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.mybatis.plus.example.model.NodeDO;
-import com.mybatis.plus.example.service.JDBCTemplateService;
+import com.mybatis.plus.example.model.Security;
 import com.mybatis.plus.example.service.impl.JdbcTemplateUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,27 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/jdbc")
 public class JDBCTemplateController {
-    @Autowired
-    JDBCTemplateService jdbcTemplateService;
+
 
     @Autowired
     JdbcTemplateUtilService jdbcTemplateUtilService;
 
-    @GetMapping("/getConfig")
+    @GetMapping("/stream")
     public void getConfig() {
-        jdbcTemplateService.getConfig();
-    }
-
-    @GetMapping("/select")
-    public void select() {
-        jdbcTemplateService.select();
+        // 流式查询
+        String sql = "select exchange_type ,security_code,security_name from t_securityinfo";
+        jdbcTemplateUtilService.streamAndProcess(sql, Security.class, 2000, System.out::println);
     }
 
 
-    @GetMapping("/jdbc")
-    public String jdbc() {
-        String sql = "SELECT * FROM node";
-        PageInfo pageInfo = jdbcTemplateUtilService.queryByPageForMySQL(null, null, 1, 10, NodeDO.class);
-        return "sql";
-    }
 }

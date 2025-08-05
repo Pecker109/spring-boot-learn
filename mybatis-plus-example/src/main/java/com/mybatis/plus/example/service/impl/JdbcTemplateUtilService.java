@@ -6,14 +6,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.sql.ResultSetMetaData;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
+import java.util.function.Consumer;
+
+import static com.mybatis.plus.example.service.impl.FieldValueSetter.setFieldValue;
 
 /**
  * @author Pecker
@@ -24,133 +32,222 @@ import java.util.*;
 @Validated
 @Component
 public class JdbcTemplateUtilService {
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    /**
-     * 只查询一列数据类型对象。用于只有一行查询结果的数据
-     *
-     * @param sql    sql
-     * @param params 替换掉 ?
-     * @param clz    Integer.class,Float.class,Double.Class,Long.class,Boolean.class,Char.class,Byte.class,Short.class
-     * @return Object
-     */
-    public Object queryOneColumnForSingletonRow(@NotNull String sql, @Nullable Object[] params, Class clz) {
-        Object result;
-        if (params != null && params.length > 0) {
-            result = jdbcTemplate.queryForObject(sql, params, clz);
-        } else {
-            result = jdbcTemplate.queryForObject(sql, clz);
-        }
-        return result;
-    }
+    private long processedCount = 0;
+
+    // 字段映射缓存：类名 -> (列名小写 -> 字段)
+    private static final Map<String, Map<String, Field>> fieldMappingCache = new HashMap<>();
 
     /**
-     * 查询返回实体对象集合
+     * 流式处理 + 反射映射
      *
-     * @param sql    sql语句
-     * @param params 填充sql问号占位符数
-     * @param clz    实体对象类型
-     * @return
+     * @param sql SQL查询语句
+     * @param clazz 目标对象类型
+     * @param batchSize 批次大小
+     * @param batchConsumer 批处理消费者
+     * @param <T> 目标对象类型
      */
-    public List queryForObjectList(@NotNull String sql, Object[] params, final Class clz) {
-        final List list = new ArrayList();
-        jdbcTemplate.query(sql, params, rs -> {
-            try {
-                List<String> columnNames = new ArrayList<>();
-                ResultSetMetaData meta = rs.getMetaData();
-                int num = meta.getColumnCount();
-                for (int i = 0; i < num; i++) {
-                    columnNames.add(meta.getColumnLabel(i + 1).toLowerCase().trim());
-                }
-                Method[] methods = clz.getMethods();
-                Set<String> fieldSet = new HashSet<>();
-                for (Method method : methods) {
-                    if (method.getName().trim().startsWith("set")) {
-                        String f = method.getName().trim().substring(3);
-                        f = (f.charAt(0) + "").toLowerCase().trim() + f.substring(1);
-                        fieldSet.add(f);
+    public <T> void streamAndProcess(String sql, Class<T> clazz, int batchSize, Consumer<List<T>> batchConsumer) {
+
+        // 创建流式PreparedStatement
+        PreparedStatementCreator psc = createStreamingStatementCreator(sql);
+
+        // 处理结果集
+        jdbcTemplate.query(psc, new ResultSetExtractor<Void>() {
+            private final List<T> currentBatch = new ArrayList<>(batchSize);
+            private long startTime = System.currentTimeMillis();
+            @Override
+            public Void extractData(ResultSet rs) throws SQLException {
+                // 初始化元数据和字段映射
+                ResultSetMetaData metaData = rs.getMetaData();
+                Map<String, Field> fieldMap = getFieldMapping(clazz, metaData);
+
+                // 处理每一行
+                while (rs.next()) {
+                    processedCount++;
+
+                    // 映射为对象并添加到批次
+                    T obj = mapRowToObject(rs, clazz, metaData, fieldMap);
+                    currentBatch.add(obj);
+
+                    // 达到批次大小时处理批次
+                    if (currentBatch.size() >= batchSize) {
+                        processBatch(currentBatch, batchConsumer);
+                        currentBatch.clear();
                     }
                 }
-                do {
-                    Object obj;
-                    obj = clz.getConstructor().newInstance();
-                    for (int i = 0; i < num; i++) {
-                        Object objVal = rs.getObject(i + 1);
-                        if (fieldSet.contains(columnNames.get(i))) {
-                            BeanUtils.copyProperty(obj, columnNames.get(i), objVal);
-                        }
-                    }
-                    list.add(obj);
-                } while (rs.next());
-            } catch (Exception e) {
-                log.error("JdbcTemplateUtilService 处理结果集异常", e);
-                throw new RuntimeException("JdbcTemplateUtilService 处理结果集异常");
+
+                // 处理最后一批
+                if (!currentBatch.isEmpty()) {
+                    processBatch(currentBatch, batchConsumer);
+                }
+                return null;
             }
         });
-
-        return list;
     }
 
     /**
-     * 查询返回List<Map<String,Object>>格式数据,每一个Map代表一行数据，列名为key
-     *
-     * @param sql    sql语句
-     * @param params 填充问号占位符数
-     * @return
+     * 创建流式PreparedStatementCreator
      */
-    public List<Map<String, Object>> queryForMaps(@NotNull String sql, @Nullable Object[] params) {
-
-        if (params != null && params.length > 0) {
-            return jdbcTemplate.queryForList(sql, params);
-        }
-        return jdbcTemplate.queryForList(sql);
+    private PreparedStatementCreator createStreamingStatementCreator(String sql) {
+        return connection -> {
+            // 创建支持流式的PreparedStatement
+            PreparedStatement ps = connection.prepareStatement(
+                    sql,
+                    // 游标只能往下移动,只能使用 rs.next()
+                    ResultSet.TYPE_FORWARD_ONLY,
+                    // 只读模式,不能通过结果集更新数据
+                    ResultSet.CONCUR_READ_ONLY
+            );
+            // 配置流式参数
+            configureStreamingParameters(connection, ps);
+            return ps;
+        };
     }
 
     /**
-     * 查询分页（MySQL数据库）
-     *
-     * @param sql     终执行查询的语句
-     * @param params  填充sql语句中的问号占位符数
-     * @param page    想要第几页的数据
-     * @param pageNum 每页显示多少条数
-     * @param clz     要封装成的实体元类型
-     * @return pageList对象
+     * 配置流式查询参数
      */
-    public PageInfo queryByPageForMySQL(@NotNull String sql, @Nullable Object[] params, int page, int pageNum, @Nullable Class clz) {
-        PageInfo pageInfo = new PageInfo();
-        String rowSql = "select count(*) from (" + sql + ") temp";   //查询总行数sql
-        int pages = 0;   //总页数
-        int rows = (Integer) queryOneColumnForSingletonRow(rowSql, params, Integer.class);  //查询总行数
-        //判断页数,如果是页大小的整数倍就为rows/pageRow如果不是整数倍就为rows/pageRow+1
-        if (rows % pageNum == 0) {
-            pages = rows / pageNum;
-        } else {
-            pages = rows / pageNum + 1;
-        }
-        //查询第page页的数据sql语句
-        if (page <= 1) {
-            sql += " limit 0," + pageNum;
-        } else {
-            sql += " limit " + ((page - 1) * pageNum) + "," + pageNum;
-        }
-        //查询第page页数据
-        List list = null;
-        if (clz != null) {
-            list = queryForObjectList(sql, params, clz);
-        } else {
-            list = queryForMaps(sql, params);
-        }
+    private void configureStreamingParameters(Connection con, PreparedStatement ps)
+            throws SQLException {
 
-        pageInfo.setList(list);
-        pageInfo.setPageSize(page);
-        pageInfo.setPageNum(pageNum);
-        pageInfo.setPages(pages);
-        pageInfo.setTotal(rows);
+        String dbType = getDatabaseType(con);
 
-        return pageInfo;
+        int defaultBatchSize = 2000;
+        switch (dbType.toLowerCase()) {
+            case "mysql":
+                // MySQL 通过设置`PreparedStatement`的fetchSize为`Integer.MIN_VALUE`，这样就会以流式的方式获取结果。MySQL的JDBC驱动会一行一行地读取数据
+                ps.setFetchSize(Integer.MIN_VALUE);
+                break;
+            case "postgresql":
+            case "oracle":
+            case "sqlserver":
+                ps.setFetchSize(defaultBatchSize);
+                break;
+            default:
+                ps.setFetchSize(defaultBatchSize);
+        }
     }
 
+    /**
+     * 获取数据库类型
+     */
+    private String getDatabaseType(Connection con) throws SQLException {
+        String url = con.getMetaData().getURL().toLowerCase();
 
+        if (url.contains(":mysql:")) return "mysql";
+        if (url.contains(":postgresql:")) return "postgresql";
+        if (url.contains(":oracle:")) return "oracle";
+        if (url.contains(":sqlserver:") || url.contains(":microsoft:")) return "sqlserver";
+
+        return "unknown";
+    }
+
+    /**
+     * 获取字段映射
+     */
+    private <T> Map<String, Field> getFieldMapping(Class<T> clazz, ResultSetMetaData metaData)
+            throws SQLException {
+
+        String className = clazz.getName();
+        Map<String, Field> fieldMap = fieldMappingCache.get(className);
+
+        if (fieldMap == null) {
+            synchronized (fieldMappingCache) {
+                fieldMap = fieldMappingCache.get(className);
+                if (fieldMap == null) {
+                    fieldMap = createFieldMapping(clazz, metaData);
+                    fieldMappingCache.put(className, fieldMap);
+                }
+            }
+        }
+        return fieldMap;
+    }
+
+    /**
+     * 创建字段映射
+     */
+    private <T> Map<String, Field> createFieldMapping(Class<T> clazz, ResultSetMetaData metaData)
+            throws SQLException {
+
+        Map<String, Field> fieldMap = new HashMap<>();
+        Field[] fields = clazz.getDeclaredFields();
+
+        for (Field field : fields) {
+            ReflectionUtils.makeAccessible(field);
+            fieldMap.put(field.getName(), field);
+        }
+
+        return fieldMap;
+    }
+
+    /**
+     * 将数据库列名转换为驼峰命名
+     */
+    private String toCamelCase(String columnName) {
+        StringBuilder sb = new StringBuilder();
+        boolean nextUpperCase = false;
+
+        for (int i = 0; i < columnName.length(); i++) {
+            char c = columnName.charAt(i);
+
+            if (c == '_') {
+                nextUpperCase = true;
+            } else {
+                if (nextUpperCase) {
+                    sb.append(Character.toUpperCase(c));
+                    nextUpperCase = false;
+                } else {
+                    sb.append(Character.toLowerCase(c));
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * 将ResultSet行映射为对象
+     */
+    private <T> T mapRowToObject(ResultSet rs, Class<T> clazz,
+                                 ResultSetMetaData metaData, Map<String, Field> fieldMap)
+            throws SQLException {
+
+        try {
+            T obj = clazz.getDeclaredConstructor().newInstance();
+
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                String columnName = metaData.getColumnLabel(i).toLowerCase();
+                String camelCase = toCamelCase(columnName);
+                // 要保证 fieldMap 中字段与 sql 字段转换方式一致
+                Field field = fieldMap.get(camelCase);
+
+                if (field != null) {
+                    FieldValueSetter.setFieldValue(obj, field, rs.getObject(i));
+                }
+            }
+
+            return obj;
+        } catch (Exception e) {
+            throw new SQLException("Error mapping row to object: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 处理批次
+     */
+    private <T> void processBatch(List<T> batch, Consumer<List<T>> batchConsumer) {
+        long startTime = System.currentTimeMillis();
+        try {
+            batchConsumer.accept(batch);
+        } finally {
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.printf("Processed batch of %,d items in %d ms%n",
+                    batch.size(), duration);
+        }
+    }
 
 }
