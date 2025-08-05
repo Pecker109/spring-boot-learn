@@ -16,11 +16,6 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://10.20.145.205:33061/gold_test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: amust_gold
-      password: ust@123
-      initial-size: 10
-      max-active: 100
+
 
 
