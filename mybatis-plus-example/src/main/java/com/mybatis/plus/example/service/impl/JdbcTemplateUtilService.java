@@ -1,27 +1,22 @@
 package com.mybatis.plus.example.service.impl;
 
-import cn.hutool.core.util.StrUtil;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.lang.Nullable;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.*;
-import java.util.*;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
-
-import static com.mybatis.plus.example.service.impl.FieldValueSetter.setFieldValue;
 
 /**
  * @author Pecker
@@ -36,7 +31,6 @@ public class JdbcTemplateUtilService {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private long processedCount = 0;
 
     // 字段映射缓存：类名 -> (列名小写 -> 字段)
     private static final Map<String, Map<String, Field>> fieldMappingCache = new HashMap<>();
@@ -44,11 +38,11 @@ public class JdbcTemplateUtilService {
     /**
      * 流式处理 + 反射映射
      *
-     * @param sql SQL查询语句
-     * @param clazz 目标对象类型
-     * @param batchSize 批次大小
+     * @param sql           SQL查询语句
+     * @param clazz         目标对象类型
+     * @param batchSize     批次大小
      * @param batchConsumer 批处理消费者
-     * @param <T> 目标对象类型
+     * @param <T>           目标对象类型
      */
     public <T> void streamAndProcess(String sql, Class<T> clazz, int batchSize, Consumer<List<T>> batchConsumer) {
 
@@ -59,30 +53,34 @@ public class JdbcTemplateUtilService {
         jdbcTemplate.query(psc, new ResultSetExtractor<Void>() {
             private final List<T> currentBatch = new ArrayList<>(batchSize);
             private long startTime = System.currentTimeMillis();
+
             @Override
             public Void extractData(ResultSet rs) throws SQLException {
-                // 初始化元数据和字段映射
-                ResultSetMetaData metaData = rs.getMetaData();
-                Map<String, Field> fieldMap = getFieldMapping(clazz, metaData);
+                try {
+                    // 初始化元数据和字段映射
+                    ResultSetMetaData metaData = rs.getMetaData();
+                    Map<String, Field> fieldMap = getFieldMapping(clazz, metaData);
 
-                // 处理每一行
-                while (rs.next()) {
-                    processedCount++;
+                    // 处理每一行
+                    while (rs.next()) {
+                        // 映射为对象并添加到批次
+                        T obj = mapRowToObject(rs, clazz, metaData, fieldMap);
 
-                    // 映射为对象并添加到批次
-                    T obj = mapRowToObject(rs, clazz, metaData, fieldMap);
-                    currentBatch.add(obj);
-
-                    // 达到批次大小时处理批次
-                    if (currentBatch.size() >= batchSize) {
-                        processBatch(currentBatch, batchConsumer);
-                        currentBatch.clear();
+                        // 达到批次大小时处理批次
+                        currentBatch.add(obj);
+                        if (currentBatch.size() >= batchSize) {
+                            processBatch(currentBatch, batchConsumer);
+                            currentBatch.clear();
+                        }
                     }
-                }
 
-                // 处理最后一批
-                if (!currentBatch.isEmpty()) {
-                    processBatch(currentBatch, batchConsumer);
+                    // 处理最后一批
+                    if (!currentBatch.isEmpty()) {
+                        processBatch(currentBatch, batchConsumer);
+                    }
+                } finally {
+                    // 需要手动关闭,防止异常情况 ResultSet 没被关闭导致服务端连接泄露
+                    JdbcUtils.closeResultSet(rs);
                 }
                 return null;
             }
